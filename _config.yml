@@ -1,3 +1,5 @@
 theme: jekyll-theme-minimal
 title: Scientific Network Tags
 description: Scientific Network Tags Initiative
+is_project_page: True
+is_user_page: False
