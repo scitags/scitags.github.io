@@ -30,7 +30,7 @@ For more details see [GitHub Flavored Markdown](https://guides.github.com/featur
 
 ### Small image
 
-![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
+![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)![ESNet](/assets/img/esnet.png)![GEANT](/assets/img/geant.png)![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
 
 ### Jekyll Themes
 
