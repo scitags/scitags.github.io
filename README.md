@@ -1,7 +1,7 @@
 ### Scitags is an initiative promoting identification of the science domains and their high-level activities at the network level. 
 
 It provides an open system using open source technologies that helps *Research and Education (R&E) providers* in understanding how their networks are being 
-utilised while at the same time providing feedback to the *scientific community* on what network flows and patterns are critical for their research. 
+utilised while at the same time providing feedback to the *scientific community* on what network flows and patterns are critical for their computing. 
 
 Our approach is based on a network tagging mechanism that marks network packets and/or network flows using the science domain and activity fields. These tags can then be captured by the *R&E providers* and correlated with their existing netflow data to better understand existing network patterns, estimate network usage and track activities.
 
