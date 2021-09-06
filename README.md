@@ -1,41 +1,25 @@
-## Welcome to GitHub Pages
+### Scitags is an initiative promoting identification of the science domains and their high-level activities at the network level. 
 
-You can use the [editor on GitHub](https://github.com/scitags/scitags.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+It provides an open system using open source technologies that helps Research 
+and Education (R&E) providers in understanding how their networks are being 
+utilised while at the same time providing feedback to the scientific community 
+on what network flows and patterns are critical for their research. 
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Scitags is based on a tagging mechanism that marks network packets and/or network flows with the science domain and activity fields. These tags can then be captured by the *R&E providers* and correlated with their existing netflow data to better understand existing network patterns, estimate network usage and track activities.
 
-### Small image
+The initiative offers an open collaboration on the research and development of the packet and flow marking prototypes and works in close collaboration with the scientific storage and transfer providers to enable the marking capability. The project is currently in the prototyping phase and is open for participation from any science domains that require or anticipate to require high throughput computing as well as any interested R&E providers.
 
-![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)![ESNet](/assets/img/esnet.png)![GEANT](/assets/img/geant.png)![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
+### Participants
 
-### Jekyll Themes
+![ESNet](/assets/img/esnet.png)![GEANT](/assets/img/geant.png)![Jisc](/assets/img/jisc.png)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/scitags/scitags.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+![NorduNET](/assets/img/nordunet.png)![RNP](/assets/img/rnp.png)
 
-### Support or Contact
+![XRootD](/assets/img/xroot.png)![DCache](/assets/img/dcache.png)![FTS](/assets/img/fts.png)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### Upcoming and Past Events
+
+- [2nd Global Research Platform Workshop](http://grpworkshop2021.theglobalresearchplatform.net/)
+
