@@ -1,4 +1,4 @@
-### Scitags is an initiative promoting identification of the science domains and their high-level activities at the network level. 
+### Scientific network tags (scitags) is an initiative promoting identification of the science domains and their high-level activities at the network level. 
 
 It provides an open system using open source technologies that helps *Research and Education (R&E) providers* in understanding how their networks are being 
 utilised while at the same time providing feedback to the *scientific community* on what network flows and patterns are critical for their computing. 
