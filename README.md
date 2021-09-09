@@ -12,7 +12,7 @@ The initiative offers an **open collaboration on the research and development o
 ![ESNet](/assets/img/esnet.png)![GEANT](/assets/img/geant.png)![Jisc](/assets/img/jisc.png)![RNP](/assets/img/rnp.png)
 ![NorduNET](/assets/img/nordunet.png)
 
-![XRootD](/assets/img/xroot.png)![DCache](/assets/img/dcache.png)![FTS](/assets/img/fts.png)![OSG](/assets/img/osg_logo.png)![Internet2](/assets/img/internet2_logo.png)
+![XRootD](/assets/img/xroot.png)![DCache](/assets/img/dcache.png)![FTS](/assets/img/fts.png)![OSG](/assets/img/osg_logo_smaller.png)![Internet2](/assets/img/internet2_logo.png)
 
 ### Upcoming and Past Events
 
