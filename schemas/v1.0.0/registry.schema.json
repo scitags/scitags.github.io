@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scitags.org/schemas/v1.0.0/registry.schema.json",
+  "title": "Flow registry schema",
+  "description": "Mapping of the flow identifiers to the experiments and activities",
+  "type": "object",
+
+  "properties": {
+    "version": {
+      "description": "The version number of the schema",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1,
+    },
+    "experiments": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/exps"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "modified": {
+      "description": "The UTC date/time when the content of registry was last modified",
+      "type": "string",
+      "format": "date-time",
+    },
+  },
+  "$defs": {
+    "exps": {
+      "type": "object",
+      "required": [ "expName", "expId", "activities" ],
+      "properties": {
+        "expName": {
+          "type": "string",
+          "description": "Experiment name",
+        },
+        "expID": {
+          "type": "integer",
+          "description": "Experiment id",
+        },
+        "activities": {
+          "type": "array",
+          "description": "Experiment's activity ids",
+          "items": {"$ref": "#/$defs/acts"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+      }
+    },
+    "acts": {
+      "type": "object",
+      "required": ["activityName", "activityId"],
+      "properties": {
+        "activityName": {
+          "type": "string",
+          "description": "Activity name"
+        },
+        "activityId": {
+          "type": "integer",
+          "description": "Activity id"
+        }
+      }        
+    }
+  },
+  "required": [ "version", "experiments"],
+}
