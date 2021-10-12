@@ -16,6 +16,6 @@ The initiative offers an **open collaboration on the research and development o
 
 ### Upcoming and Past Events
 
-- October 2021: [LHCOPN/LHCONE workshop](https://indico.cern.ch/event/1022426)  ([talk](https://indico.cern.ch/event/1022426/contributions/4492285/attachments/2326491/3963219/Research%20Network%20Technical%20WG%20update.pdf))
-- September 2021: [2nd Global Research Platform Workshop](https://grpworkshop2021.theglobalresearchplatform.net/) ([talk](https://grpworkshop2021.theglobalresearchplatform.net/PDF/4-McKEE-GRP-2021-Packet-FlowMarkingforGlobalScience%20Domains.pdf))
+- October 2021: [LHCOPN/LHCONE workshop](https://indico.cern.ch/event/1022426)  ([slides](https://indico.cern.ch/event/1022426/contributions/4492285/attachments/2326491/3963219/Research%20Network%20Technical%20WG%20update.pdf))
+- September 2021: [2nd Global Research Platform Workshop](https://grpworkshop2021.theglobalresearchplatform.net/) ([slides](https://grpworkshop2021.theglobalresearchplatform.net/PDF/4-McKEE-GRP-2021-Packet-FlowMarkingforGlobalScience%20Domains.pdf))
 
