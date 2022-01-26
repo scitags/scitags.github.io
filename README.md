@@ -12,9 +12,10 @@ The initiative offers an **open collaboration on the research and development o
 
 <a href="https://xrootd.slac.stanford.edu/"><img src="/assets/img/xroot.png" alt="XRoot Logo" target="_blank" height="45.0pt"></a>&nbsp;&nbsp;<a href="https://www.dcache.org/"><img src="/assets/img/dcache.png" alt="dCache Logo" target="_blank" height="42.0pt"></a>&nbsp;&nbsp;<a href="https://fts.web.cern.ch/fts/"><img src="/assets/img/fts.png" alt="FTS Logo" target="_blank" height="42.0pt"></a>&nbsp;&nbsp;<a href="https://rucio.cern.ch/"><img src="/assets/img/rucio.png" alt="Rucio Logo" target="_blank" height="35.0pt"></a><br>
 
-<a href="https://opensciencegrid.org/"><img src="/assets/img/osg_logo_smaller.png" alt="XRoot Logo" target="_blank" height="45.0pt"></a>&nbsp;&nbsp;<a href="https://www.nordu.net"><img src="/assets/img/nordunet.png" alt="NORDUnet Logo" target="_blank" height="35.0pt">
+<a href="https://opensciencegrid.org/"><img src="/assets/img/osg_logo_smaller.png" alt="XRoot Logo" target="_blank" height="45.0pt"></a>&nbsp;&nbsp;<a href="https://www.nordu.net"><img src="/assets/img/nordunet.png" alt="NORDUnet Logo" target="_blank" height="35.0pt"></a><br>
 
 ### Upcoming and Past Events
+- March 2022: [LHCOPN/LHCONE workshop](https://indico.cern.ch/event/1110783/)
 - November 2021: [GridPP Technical Seminar](https://indico.cern.ch/event/1093856/) ([slides](https://indico.cern.ch/event/1093856/contributions/4600338/attachments/2349549/4007314/Scientific%20Network%20Tags_%20Packet%20and%20Flow%20Marking%20.pdf))
 - November 2021: [ATLAS ADC Technical Coordination Board](https://indico.cern.ch/event/1096850/)
 - October 2021: [LHCOPN/LHCONE workshop](https://indico.cern.ch/event/1022426)  ([slides](https://indico.cern.ch/event/1022426/contributions/4492285/attachments/2326491/3963219/Research%20Network%20Technical%20WG%20update.pdf))
