@@ -12,7 +12,7 @@ The initiative offers an **open collaboration on the research and development o
 
 <a href="https://xrootd.slac.stanford.edu/"><img src="/assets/img/xroot.png" alt="XRoot Logo" target="_blank" height="45.0pt"></a>&nbsp;&nbsp;<a href="https://www.dcache.org/"><img src="/assets/img/dcache.png" alt="dCache Logo" target="_blank" height="42.0pt"></a>&nbsp;&nbsp;<a href="https://fts.web.cern.ch/fts/"><img src="/assets/img/fts.png" alt="FTS Logo" target="_blank" height="42.0pt"></a>&nbsp;&nbsp;<a href="https://rucio.cern.ch/"><img src="/assets/img/rucio.png" alt="Rucio Logo" target="_blank" height="35.0pt"></a><br>
 
-<a href="https://opensciencegrid.org/"><img src="/assets/img/osg_logo_smaller.png" alt="XRoot Logo" target="_blank" height="45.0pt"></a>
+<a href="https://opensciencegrid.org/"><img src="/assets/img/osg_logo_smaller.png" alt="XRoot Logo" target="_blank" height="45.0pt"></a><a href="https://www.nordu.net"><img src="/assets/img/nordunet.png" alt="NORDUnet Logo" target="_blank" height="30.0pt">
 
 ### Upcoming and Past Events
 
