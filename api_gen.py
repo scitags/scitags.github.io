@@ -22,6 +22,8 @@ API_VERSION = 1
 API_FILE = 'api_n.json'
 
 if __name__ == '__main__':
+    print("Running in {}".format(os.getcwd()))
+    print("Fetching CSV ...")
     csv_req = requests.get(GOOGLE_SHEET_CSV)
     if csv_req.status_code != 200 or not csv_req.text:
         print('Failed to get/read Google Sheet CSV file')
@@ -37,7 +39,7 @@ if __name__ == '__main__':
         with open(API_FILE, 'r') as api_f:
             api_prev = json.load(api_f)
     else:
-        print("Failed to find local API file, regenerating")
+        print("Failed to find local API file, initial build")
         api_prev = dict()
         api_prev['experiments'] = list()
 
@@ -56,6 +58,8 @@ if __name__ == '__main__':
                 sciences[row[1].lower()] = int(row[2])
             if row[7] and row[8] and row[9]:
                 activities[row[7].lower()].append([row[8].strip().lower(), int(row[9])])
+    print("Loaded: {} sciences".format(len(sciences)))
+    print("Loaded: {} activities".format(sum([len(a) for a in activities.keys()])))
 
     api_new['experiments'] = list()
     for k, v in sciences.items():
@@ -72,16 +76,18 @@ if __name__ == '__main__':
         api_new['experiments'].append(entry)
 
     api_diff = False
+    if not api_prev['experiments']:
+        api_diff = True
     pairs = zip(api_new['experiments'], api_prev['experiments'])
     for x, y in pairs:
         if x != y:
-            print('diff:', x, y)
+            print('Diff #:', x, y)
             api_diff = True
             break
         ac_pairs = zip(x['activities'], y['activities'])
         for ax, ay in ac_pairs:
             if ax != ay:
-                print('diff:', ax, ay)
+                print('Diff #:', ax, ay)
                 api_diff = True
                 break
 
