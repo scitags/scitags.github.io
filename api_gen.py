@@ -19,7 +19,7 @@ GOOGLE_SHEET_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vSKhv6z0Vo12Ty
 GOOGLE_SHEET_HEADERS = 3
 SCITAGS_API = 'http://api.scitags.org/'
 API_VERSION = 1
-API_FILE = 'api_n.json'
+API_FILE = 'api.json'
 
 if __name__ == '__main__':
     print("Running in {}".format(os.getcwd()))
