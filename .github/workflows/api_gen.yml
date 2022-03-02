@@ -34,4 +34,4 @@ jobs:
         committer_name: GitHub Actions
         committer_email: actions@github.com
         message: 'Automated API sync'
-        add: 'api_n.json'
+        add: 'api.json'
