@@ -41,7 +41,7 @@
       "then": {
         "required": [ "end-time" ]
       },
-      "required": [ "state", "start-time", "current-time" ],
+      "required": [ "state", "start-time" ],
       "additionalProperties": false,
     },
     "flow-id": {
@@ -103,6 +103,25 @@
       ],
       "required": ["afi", "src-ip", "dst-ip", "protocol", "src-port", "dst-port"],
       "additionalProperties": false,
+    },
+    "usage": {
+      "description": "Bytes sent/received in the original flow (optional)",
+      "type": "object",
+      "properties": {
+        "received": {
+          "description": "Bytes received in the original flow",
+          "type": "integer",
+        },
+        "sent": {
+          "description": "Bytes sent in the original flow",
+          "type": "integer",
+        },
+      },
+      "additionalProperties": false,
+    },
+    "netlink": {
+      "description": "Netlink information related to the original flow (optional)",
+      "type": "object",      
     },
     "context": {
       "description": "Additional contextual information about the original flow",
