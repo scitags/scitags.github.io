@@ -15,6 +15,18 @@
             "expId": 2,
             "activities": [
                 {
+                    "activityName": "perfsonar",
+                    "activityId": 2
+                },
+                {
+                    "activityName": "cache",
+                    "activityId": 3
+                },
+                {
+                    "activityName": "datachallenge",
+                    "activityId": 4
+                },
+                {
                     "activityName": "default",
                     "activityId": 8
                 },
@@ -95,22 +107,125 @@
         {
             "expName": "cms",
             "expId": 3,
-            "activities": []
+            "activities": [
+                {
+                    "activityName": "default",
+                    "activityId": 1
+                },
+                {
+                    "activityName": "perfsonar",
+                    "activityId": 2
+                },
+                {
+                    "activityName": "cache",
+                    "activityId": 3
+                },
+                {
+                    "activityName": "datachallenge",
+                    "activityId": 4
+                }
+            ]
         },
         {
             "expName": "lhcb",
             "expId": 4,
-            "activities": []
+            "activities": [
+                {
+                    "activityName": "default",
+                    "activityId": 1
+                },
+                {
+                    "activityName": "perfsonar",
+                    "activityId": 2
+                },
+                {
+                    "activityName": "cache",
+                    "activityId": 3
+                },
+                {
+                    "activityName": "datachallenge",
+                    "activityId": 4
+                }
+            ]
         },
         {
             "expName": "alice",
             "expId": 5,
-            "activities": []
+            "activities": [
+                {
+                    "activityName": "default",
+                    "activityId": 1
+                },
+                {
+                    "activityName": "perfsonar",
+                    "activityId": 2
+                },
+                {
+                    "activityName": "cache",
+                    "activityId": 3
+                },
+                {
+                    "activityName": "datachallenge",
+                    "activityId": 4
+                },
+                {
+                    "activityName": "data consolidation",
+                    "activityId": 8
+                },
+                {
+                    "activityName": "job preparation",
+                    "activityId": 9
+                },
+                {
+                    "activityName": "data access",
+                    "activityId": 10
+                },
+                {
+                    "activityName": "calibration data access",
+                    "activityId": 11
+                },
+                {
+                    "activityName": "job output",
+                    "activityId": 12
+                },
+                {
+                    "activityName": "data replication",
+                    "activityId": 13
+                },
+                {
+                    "activityName": "cli download",
+                    "activityId": 14
+                },
+                {
+                    "activityName": "cli upload",
+                    "activityId": 15
+                },
+                {
+                    "activityName": "functional tests",
+                    "activityId": 16
+                }
+            ]
         },
         {
             "expName": "belleii",
             "expId": 6,
             "activities": [
+                {
+                    "activityName": "default",
+                    "activityId": 1
+                },
+                {
+                    "activityName": "perfsonar",
+                    "activityId": 2
+                },
+                {
+                    "activityName": "cache",
+                    "activityId": 3
+                },
+                {
+                    "activityName": "datachallenge",
+                    "activityId": 4
+                },
                 {
                     "activityName": "data consolidation",
                     "activityId": 8
@@ -192,19 +307,70 @@
         {
             "expName": "ska",
             "expId": 7,
-            "activities": []
+            "activities": [
+                {
+                    "activityName": "default",
+                    "activityId": 1
+                },
+                {
+                    "activityName": "perfsonar",
+                    "activityId": 2
+                },
+                {
+                    "activityName": "cache",
+                    "activityId": 3
+                },
+                {
+                    "activityName": "datachallenge",
+                    "activityId": 4
+                }
+            ]
         },
         {
             "expName": "lsst",
             "expId": 8,
-            "activities": []
+            "activities": [
+                {
+                    "activityName": "default",
+                    "activityId": 1
+                },
+                {
+                    "activityName": "perfsonar",
+                    "activityId": 2
+                },
+                {
+                    "activityName": "cache",
+                    "activityId": 3
+                },
+                {
+                    "activityName": "datachallenge",
+                    "activityId": 4
+                }
+            ]
         },
         {
             "expName": "dune",
             "expId": 9,
-            "activities": []
+            "activities": [
+                {
+                    "activityName": "default",
+                    "activityId": 1
+                },
+                {
+                    "activityName": "perfsonar",
+                    "activityId": 2
+                },
+                {
+                    "activityName": "cache",
+                    "activityId": 3
+                },
+                {
+                    "activityName": "datachallenge",
+                    "activityId": 4
+                }
+            ]
         }
     ],
     "version": 1,
-    "modified": "2022-03-02T14:32:18.291942+00:00"
+    "modified": "2022-03-24T14:40:03.988208+00:00"
 }
