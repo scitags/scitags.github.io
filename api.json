@@ -7,6 +7,18 @@
                 {
                     "activityName": "default",
                     "activityId": 1
+                },
+                {
+                    "activityName": "perfsonar",
+                    "activityId": 2
+                },
+                {
+                    "activityName": "cache",
+                    "activityId": 3
+                },
+                {
+                    "activityName": "datachallenge",
+                    "activityId": 4
                 }
             ]
         },
@@ -327,7 +339,7 @@
             ]
         },
         {
-            "expName": "lsst",
+            "expName": "dune",
             "expId": 8,
             "activities": [
                 {
@@ -349,8 +361,52 @@
             ]
         },
         {
-            "expName": "dune",
+            "expName": "lsst",
             "expId": 9,
+            "activities": [
+                {
+                    "activityName": "default",
+                    "activityId": 1
+                },
+                {
+                    "activityName": "perfsonar",
+                    "activityId": 2
+                },
+                {
+                    "activityName": "cache",
+                    "activityId": 3
+                },
+                {
+                    "activityName": "datachallenge",
+                    "activityId": 4
+                }
+            ]
+        },
+        {
+            "expName": "ilc",
+            "expId": 10,
+            "activities": [
+                {
+                    "activityName": "default",
+                    "activityId": 1
+                },
+                {
+                    "activityName": "perfsonar",
+                    "activityId": 2
+                },
+                {
+                    "activityName": "cache",
+                    "activityId": 3
+                },
+                {
+                    "activityName": "datachallenge",
+                    "activityId": 4
+                }
+            ]
+        },
+        {
+            "expName": "auger",
+            "expId": 11,
             "activities": [
                 {
                     "activityName": "default",
@@ -372,5 +428,5 @@
         }
     ],
     "version": 1,
-    "modified": "2022-03-24T14:40:03.988208+00:00"
+    "modified": "2022-11-10T10:35:30.516746+00:00"
 }
