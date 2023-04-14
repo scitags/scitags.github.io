@@ -98,5 +98,5 @@ if __name__ == '__main__':
         api_new['version'] = API_VERSION
         api_new['modified'] = "{}+00:00".format(datetime.datetime.utcnow().isoformat())
         with open(API_FILE, 'w') as api_f:
-            api_f.write(json.dumps(api_new, indent=4))
+            api_f.write(json.dumps(api_new))
         print('Changes saved')
