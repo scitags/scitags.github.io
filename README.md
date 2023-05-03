@@ -20,7 +20,7 @@ The initiative offers an **open collaboration on the research and development o
 - April 2023: [LHCOPN/LHCONE Workshop, Prague](https://indico.cern.ch/event/1234127/)
 - April 2023: [HEPiX Workshop, Taiwan](https://indico.cern.ch/event/1222948/contributions/5321009/)
 - March 2023: [XRootD & FTS Workshop, Ljubljana](https://indico.cern.ch/event/875381/contributions/5300142/)
-- November 2022: [SuperComputing 2022 Demo, Dallas](https://sc22.supercomputing.org/) ([blog](https://blog.sflow.com/2022/11/scientific-network-tags-scitags.html), [poster](https://www.scitags.org/))
+- November 2022: [SuperComputing 2022 Demo, Dallas](https://sc22.supercomputing.org/) ([blog](https://blog.sflow.com/2022/11/scientific-network-tags-scitags.html), [poster](https://www.scitags.org/assets/img/SCITAGS_SC22.pdf))
 - October 2022: [LHCOPN/LHCONE workshop, CERN](https://indico.cern.ch/event/1146558/)
 - October 2022: [WLCG Data Challenges Meeting, CERN](https://indico.cern.ch/event/1212782/)
 - October 2022: [HEPiX workshop, CERN](https://indico.cern.ch/event/1200682/contributions/5103523/)
