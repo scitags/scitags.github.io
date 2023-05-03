@@ -15,6 +15,17 @@ The initiative offers an **open collaboration on the research and development o
 <a href="https://www.nordu.net"><img src="/assets/img/nordunet.png" alt="NORDUnet Logo" target="_blank" height="35.0pt"></a>&nbsp;&nbsp;<a href="https://www.startap.net/starlight/ABOUT/"><img src="/assets/img/starlight.png" alt="StarLight Logo" target="_blank" height="35.0pt"></a>&nbsp;&nbsp;<a href="https://opensciencegrid.org/"><img src="/assets/img/osg_logo_smaller.png" alt="XRoot Logo" target="_blank" height="45.0pt"></a><br>
 
 ### Upcoming and Past Events
+- November 2023: [SuperComputing 2023 Demo, Denver](https://sc23.supercomputing.org/)
+- May 2023: [CHEP 2023, Norfolk](https://indico.jlab.org/event/459/contributions/11321/)
+- April 2023: [LHCOPN/LHCONE Workshop, Prague](https://indico.cern.ch/event/1234127/)
+- April 2023: [HEPiX Workshop, Taiwan](https://indico.cern.ch/event/1222948/contributions/5321009/)
+- March 2023: [XRootD & FTS Workshop, Ljubljana](https://indico.cern.ch/event/875381/contributions/5300142/)
+- November 2022: [SuperComputing 2022 Demo, Dallas](https://sc22.supercomputing.org/) ([blog](https://blog.sflow.com/2022/11/scientific-network-tags-scitags.html), [poster](https://www.scitags.org/))
+- October 2022: [LHCOPN/LHCONE workshop, CERN](https://indico.cern.ch/event/1146558/)
+- October 2022: [WLCG Data Challenges Meeting, CERN](https://indico.cern.ch/event/1212782/)
+- October 2022: [HEPiX workshop, CERN](https://indico.cern.ch/event/1200682/contributions/5103523/)
+- October 2022: [3rd Global Research Platform, Salt Lake City](http://grpworkshop2022.theglobalresearchplatform.net/program.html)
+- May 2022: [HEPiX workshop](https://indico.cern.ch/event/1123214/contributions/4833642/)
 - March 2022: [LHCOPN/LHCONE workshop](https://indico.cern.ch/event/1110783/)
 - November 2021: [GridPP Technical Seminar](https://indico.cern.ch/event/1093856/) ([slides](https://indico.cern.ch/event/1093856/contributions/4600338/attachments/2349549/4007314/Scientific%20Network%20Tags_%20Packet%20and%20Flow%20Marking%20.pdf))
 - November 2021: [ATLAS ADC Technical Coordination Board](https://indico.cern.ch/event/1096850/)
