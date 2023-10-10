@@ -20,6 +20,7 @@ The initiative offers an **open collaboration on the research and development o
 
 ### Upcoming and Past Events
 - November 2023: [SuperComputing 2023 Demo, Denver](https://sc23.supercomputing.org/)
+- October 2023: [4th Global Research Platform, Cyprus](https://grpworkshop2023.theglobalresearchplatform.net/4GRP_Program-FINAL-100623.pdf)
 - May 2023: [CHEP 2023, Norfolk](https://indico.jlab.org/event/459/contributions/11321/)
 - April 2023: [LHCOPN/LHCONE Workshop, Prague](https://indico.cern.ch/event/1234127/)
 - April 2023: [HEPiX Workshop, Taiwan](https://indico.cern.ch/event/1222948/contributions/5321009/)
