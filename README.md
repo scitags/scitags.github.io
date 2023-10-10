@@ -14,6 +14,10 @@ The initiative offers an **open collaboration on the research and development o
 
 <a href="https://www.nordu.net"><img src="/assets/img/nordunet.png" alt="NORDUnet Logo" target="_blank" height="35.0pt"></a>&nbsp;&nbsp;<a href="https://www.startap.net/starlight/ABOUT/"><img src="/assets/img/starlight.png" alt="StarLight Logo" target="_blank" height="35.0pt"></a>&nbsp;&nbsp;<a href="https://opensciencegrid.org/"><img src="/assets/img/osg_logo_smaller.png" alt="XRoot Logo" target="_blank" height="45.0pt"></a><br>
 
+### Publications
+- Identifying and Understanding Scientific Network Flows, CHEP2023, EPJ Web Conf. to appear (2024, [pdf](https://www.scitags.org/assets/img/chep_paper23.pdf)
+- Use of the IPv6 Flow Label for WLCG Packet Marking, [IETF Draft](https://datatracker.ietf.org/doc/draft-cc-v6ops-wlcg-flow-label-marking/)
+
 ### Upcoming and Past Events
 - November 2023: [SuperComputing 2023 Demo, Denver](https://sc23.supercomputing.org/)
 - May 2023: [CHEP 2023, Norfolk](https://indico.jlab.org/event/459/contributions/11321/)
