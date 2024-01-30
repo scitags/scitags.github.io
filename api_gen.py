@@ -57,7 +57,7 @@ if __name__ == '__main__':
             if row[1] and row[2]:
                 sciences[row[1].lower()] = int(row[2])
             if row[7] and row[8] and row[9]:
-                activities[row[7].lower()].append([row[8].strip(), int(row[9])])
+                activities[row[7].strip().lower()].append([row[8].strip(), int(row[9])])
     print("Loaded: {} sciences".format(len(sciences)))
     print("Loaded: {} activities".format(sum([len(a) for a in activities.keys()])))
 
