@@ -14,7 +14,7 @@ The initiative offers an **open collaboration on the research and development o
 
 <a href="https://www.nordu.net"><img src="/assets/img/nordunet.png" alt="NORDUnet Logo" target="_blank" height="35.0pt"></a>&nbsp;&nbsp;<a href="https://www.startap.net/starlight/ABOUT/"><img src="/assets/img/starlight.png" alt="StarLight Logo" target="_blank" height="35.0pt"></a>&nbsp;&nbsp;<a href="https://opensciencegrid.org/"><img src="/assets/img/osg_logo_smaller.png" alt="XRoot Logo" target="_blank" height="45.0pt"></a><br>
 
-<a href="https://www.scitags.org"><img src="/assets/img/site_logos.png" alt="Sites" target="_blank" height="35.0pt"></a><br>
+<a href="https://www.scitags.org"><img src="/assets/img/site_logos.png" alt="Sites" target="_blank" height="90.0pt"></a><br>
 
 ### Publications
 - Identifying and Understanding Scientific Network Flows, CHEP2023, EPJ Web Conf. to appear (2024, [pdf](https://www.scitags.org/assets/img/chep_paper23.pdf))
