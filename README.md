@@ -21,6 +21,12 @@ The initiative offers an **open collaboration on the research and development o
 - Use of the IPv6 Flow Label for WLCG Packet Marking, [IETF Draft](https://datatracker.ietf.org/doc/draft-cc-v6ops-wlcg-flow-label-marking/)
 
 ### Upcoming and Past Events
+- November 2024: SuperComputing 2024, Atlanta (TBC)
+- November 2024: HEPiX Fall Workshop, Oklahoma
+- October 2024: LHCOPN/LHCONE Workshop, Beijing
+- May 2024: WLCG/HSF Workshop, Hamburg
+- April 2024: [HEPiX Spring Worshop, Paris](https://indico.cern.ch/event/1377701/contributions/5900862/)
+- April 2024: [LHCOPN/LHCONE Workshop, Catania](https://indico.cern.ch/event/1349135/)
 - November 2023: [SuperComputing 2023 Demo, Denver](https://sc23.supercomputing.org/)
 - October 2023: [4th Global Research Platform Workshop, Cyprus](https://grpworkshop2023.theglobalresearchplatform.net/4GRP_Program-FINAL-100623.pdf)
 - May 2023: [CHEP 2023, Norfolk](https://indico.jlab.org/event/459/contributions/11321/)
