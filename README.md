@@ -19,12 +19,18 @@ The initiative offers an **open collaboration on the research and development o
 ### Publications
 - Identifying and Understanding Scientific Network Flows, CHEP2023, EPJ Web Conf. to appear (2024, [pdf](https://www.scitags.org/assets/img/chep_paper23.pdf))
 - Use of the IPv6 Flow Label for WLCG Packet Marking, [IETF Draft](https://datatracker.ietf.org/doc/draft-cc-v6ops-wlcg-flow-label-marking/)
+- Scitags: A Standardized Framework for Traffic Identification and Network Visibility in Data-Intensive Research Infrastructures, CHEP2025, EPJ Web Conf. to appear (2025, [pdf](https://www.scitags.org/assets/img/CHEP_2025.pdf))
 
 ### Upcoming and Past Events
-- November 2024: SuperComputing 2024, Atlanta (TBC)
-- November 2024: HEPiX Fall Workshop, Oklahoma
-- October 2024: LHCOPN/LHCONE Workshop, Beijing
-- May 2024: WLCG/HSF Workshop, Hamburg
+- May 2025: [GNA-G EU and US Community Calls](https://www.gna-g.net/attend-a-meeting/gna-g-community-vcs-q2-2025/)
+- April 2025: [22nd GEANT SIG-NOC meeting, Prague](https://wiki.geant.org/display/SIGNOC/22nd+SIG-NOC+meeting+-+Prague%2C+Czechia)
+- March 2025: [HEPiX Spring Workshop, Lugano](https://indico.cern.ch/event/1477299/contributions/6412763/)
+- March 2025: [LHCOPN/LHCONE Workshop, Jodrell Bank](https://indico.cern.ch/event/1479019/#19-network-research-technologi)
+- February 2025: [FOSDEM 2025, Brussels](https://fosdem.org/2025/schedule/event/fosdem-2025-6182-scitags-network-traffic-tagging-for-scientific-computing/)
+- December 2024: [Research network engineering (RNE) community group](https://www.jisc.ac.uk/get-involved/research-network-engineering-rne-community-group)
+- November 2024: [SuperComputing 2024, Atlanta](https://sc24.supercomputing.org/wp-content/uploads/2025/02/nre008.pdf)
+- November 2024: [HEPiX Fall Workshop, Oklahoma](https://indico.cern.ch/event/1450798/contributions/6199201/)
+- October 2024: [LHCOPN/LHCONE Workshop, Beijing](https://indico.cern.ch/event/1410638/#27-scitags-a-standardized-fram)
 - April 2024: [HEPiX Spring Worshop, Paris](https://indico.cern.ch/event/1377701/contributions/5900862/)
 - April 2024: [LHCOPN/LHCONE Workshop, Catania](https://indico.cern.ch/event/1349135/)
 - November 2023: [SuperComputing 2023 Demo, Denver](https://sc23.supercomputing.org/)
