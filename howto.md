@@ -57,11 +57,10 @@ Software executing I/O that performs the physical packet marking or emits "Firef
 
 Sample XRootD Configuration (/etc/xrootd/xrootd.cfg):
 ```bash
-Plaintext
-# Enable Packet Marking (pmark)
-xrootd.pmark domain any
+
 # Direct fireflies to a local or remote collector
 xrootd.pmark ffdest collector.scitags.org:10514
+xrootd.pmark domain any
 
 # (Optional)
 # Fallback configuration to mark experiments per directory (if scitags missing in the protocol)
