@@ -33,8 +33,8 @@ Brokers that receive the job and propagate metadata via headers or protocol para
 File Transfer Service (FTS) support scitags from version 3.2.10 or higher, [gfal2](https://manpages.debian.org/unstable/gfal2-util-scripts/gfal-copy.1.en.html#scitag) library from version 2.21.0 
 For all transfer service scitag is an integer calculated using the following formula: <expID><<6|<actID> where expID and actID are relevant IDs from registry
 
-Sample **FTS submission** Snippet:
-```json
+Sample **FTS** submissions:
+```bash
 From the command line
 $ fts-rest-transfer-submit --scitag <scitag> -s <fts-endpoint> <src> <dst>
 
