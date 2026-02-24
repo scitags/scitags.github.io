@@ -44,7 +44,7 @@ Sample FTS REST Submission Snippet:
 }
 ```
 
-Sample gfal-copy command:
+Sample **gfal-copy** command:
 ```bash
 # Transferring a file with SciTag 132 (e.g., CMS Analysis)
 gfal-copy --scitag 132 \
@@ -52,10 +52,15 @@ gfal-copy --scitag 132 \
           https://dest-se.example.org/path/to/destination.dat
 ```
 
+Sample **xrdcp** command:
+```bash
+xrdcp https://scr-ce.example.org/path/to/source.dat&scitag.flow=132 /dev/null
+```
+
 ### 4. Storage Systems (Data Transfer Agents)
 Software executing I/O that performs the physical packet marking or emits "Firefly" packets.
 
-Sample *XRootD/EOS Configuration* (/etc/xrootd/xrootd.cfg):
+Sample **XRootD/EOS Configuration** (/etc/xrootd/xrootd.cfg):
 ```bash
 
 # Direct fireflies to a global collector
@@ -80,7 +85,7 @@ xrootd.pmark map2act <vo> default default
 # xrootd.pmark map2act ska default default
 ```
 
-Sample *dCache Configuration* (dcache.conf):
+Sample **dCache Configuration** (dcache.conf):
 ```bash
 pool.enable.firefly=true
 pool.firefly.destination=collector.scitags.org:10514
