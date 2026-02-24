@@ -31,16 +31,30 @@ TBA
 ### 3. Transfer Services
 Brokers that receive the job and propagate metadata via headers or protocol parameters.
 File Transfer Service (FTS) support scitags from version 3.2.10 or higher, [gfal2](https://manpages.debian.org/unstable/gfal2-util-scripts/gfal-copy.1.en.html#scitag) library from version 2.21.0 
+For all transfer service scitag is an integer calculated using the following formula: <expID><<6|<actID> where expID and actID are relevant IDs from registry
 
-Sample FTS REST Submission Snippet:
+Sample **FTS submission** Snippet:
 ```json
+From the command line
+$ fts-rest-transfer-submit --scitag <scitag> -s <fts-endpoint> <src> <dst>
+
+From the Python module
+import fts3.rest.client.easy as fts3
+
+fts3.new_transfer(.., scitag=<scitag>, ..)
+
+Via the REST API (JSON format)
 {
-  "files": [{
-    "sources": ["[https://src.example.org/file](https://src.example.org/file)"],
-    "destinations": ["[https://dst.example.org/file](https://dst.example.org/file)"],
-    "metadata": { "scitag": "132" }
-  }],
-  "params": { "overwrite": true }
+  "files": [
+    {
+      "sources": [ "<src>" ],
+      "destinations": [ "<dst>" ],
+      "scitag": 65  # must be integer type
+    }
+  ],
+  "params": {
+    "key": "value"
+  }
 }
 ```
 
@@ -55,6 +69,12 @@ gfal-copy --scitag 132 \
 Sample **xrdcp** command:
 ```bash
 xrdcp https://scr-ce.example.org/path/to/source.dat&scitag.flow=132 /dev/null
+```
+
+Sample **curl** command:
+```bash
+curl -v --insecure -H "SciTag: 313" --capath <ca_path> -s -L -f -u user:password -T /bin/bash https://dest-se.example.org/path/test-file-01
+curl -v --insecure -H "SciTag: 313" --capath <ca_path> -s -L -f -u root:password -o /tmp/test. https://src.example.org:2881/path/test-file-01
 ```
 
 ### 4. Storage Systems (Data Transfer Agents)
