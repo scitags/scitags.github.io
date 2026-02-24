@@ -115,10 +115,46 @@ Sample flowd-go config (conf.json):
 ### 6. Firefly Collectors
 The aggregation layer that ingests UDP Firefly packets for visualization and analysis.
 
-Various plugins are available that can be added in the logstash pipeline. A sample testing/debugging setup with Opensearch would involve the following:
+Various logstash filters are available that can be added in the logstash pipeline. A sample testing/debugging setup with Opensearch would involve the following:
 
 ```
-sample docker-compose.yml to run Opensearch in 2 containers (this is only accessible via localhost)
+sample setup with logstash
+# git clone https://github.com/scitags/firefly-collector.git
+# cd firefly-collector
+## the provided filters can be composed to perform various different functions
+# ll firefly-collector/conf/logstash
+total 44
+-rw-r--r--. 1 root root  186 Dec 18 10:16 01-input.conf
+-rw-r--r--. 1 root root 1193 Dec 18 10:16 02-parsing.conf
+-rw-r--r--. 1 root root  421 Dec 18 10:16 05-calc-duration.conf
+-rw-r--r--. 1 root root  421 Dec 18 10:18 06-calc-throughput.conf
+-rw-r--r--. 1 root root 2552 Dec 18 10:18 63-post-processing.conf
+-rw-r--r--. 1 root root 1488 Dec 18 10:16 70-cric-sites.conf
+-rw-r--r--. 1 root root  987 Dec 18 10:16 71-scitags.conf
+-rw-r--r--. 1 root root  144 Dec 18 10:16 98-stdout.conf.debug
+-rw-r--r--. 1 root root  161 Dec 18 10:16 99-firefly-fwd.conf.example
+-rw-r--r--. 1 root root  280 Dec 18 10:16 99-opensearch.conf.example
+-rw-r--r--. 1 root root 1201 Dec 18 10:16 99-outputs.conf.example
+
+Simple forwarding can be achieved by keeping only 01-input, 02-parsing and 99-firefly-fwd.conf
+
+For a site collector one possible option is to run two independent logstash instances:
+# forwarder - collects all fireflies from a site and forwards them to two destinations: collector.scitags.org and local_site_collector
+            - this can be achieved by using 01-input, 02-parsing and then two copies of 99-firefly-fwd (one for collector.scitags.org, the other for local_site_collector)
+# local_site_collector - uses the following filters 01-input, 02-parsing, 05-calc-duration, 06-calc-throughput and 99-opensearch
+            - optionally can use 70-cric-sites and 71-scitags to enrich existing data, both require to be initiated via scripts found in metadata/cric and metadata/scitags
+            - output files must be shared with logstash container (via conf/logstash_data)
+
+# logstash collector can be run from github repo directory via:
+docker run  --network=host --name firefly-stream -d  -v ./conf/logstash/:/usr/share/logstash/pipeline/
+            -v ./conf/ruby/:/usr/lib/firefly/ruby/ -v ./conf/logstash_data/:/etc/stardust/pipeline/  
+            -t -e XPACK_MONITORING_ENABLED=false -v ./docker-entrypoint:/usr/local/bin/docker-entrypoint docker.elastic.co/logstash/logstash:7.17.19
+
+# Sample Grafana dashboard that works with Opensearch and data enriched with cric and scitags is stored in firefly-collector/dashboards/Scitags Network Flows - OpenSearch.json
+```
+
+```
+sample docker-compose.yml to run Opensearch in 2 containers (only accessible via localhost)
 
 services:
   opensearch-node: # This is also the hostname of the container within the Docker network (i.e. https://opensearch-node1/)
@@ -156,17 +192,5 @@ services:
       - 'OPENSEARCH_HOSTS: ["http://localhost:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
       - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true"
     network_mode: 'host'
-```
-
-```
-sample setup with logstash
-# git clone https://github.com/scitags/firefly-collector.git
-# cd firefly-collector
-## the provided filters can be composed to perform various different functions
-TBA
-
-docker run  --network=host --name firefly-stream -d  -v ./conf/logstash/:/usr/share/logstash/pipeline/
-            -v ./conf/ruby/:/usr/lib/firefly/ruby/ -v ./conf/logstash_data/:/etc/stardust/pipeline/  
-            -t -e XPACK_MONITORING_ENABLED=false -v ./docker-entrypoint:/usr/local/bin/docker-entrypoint docker.elastic.co/logstash/logstash:7.17.19
 ```
 
