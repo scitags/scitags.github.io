@@ -58,7 +58,7 @@ Software executing I/O that performs the physical packet marking or emits "Firef
 Sample XRootD/EOS Configuration (/etc/xrootd/xrootd.cfg):
 ```bash
 
-# Direct fireflies to a local or remote collector
+# Direct fireflies to a global collector
 xrootd.pmark ffdest collector.scitags.org:10514
 xrootd.pmark domain any
 
@@ -144,6 +144,7 @@ Simple forwarding can be achieved by keeping only 01-input, 02-parsing and 99-fi
 For a site collector one possible option is to run two independent logstash instances:
 # forwarder - collects all fireflies from a site and forwards them to two destinations: collector.scitags.org and local_site_collector
             - this can be achieved by using 01-input, 02-parsing and then two copies of 99-firefly-fwd (one for collector.scitags.org, the other for local_site_collector)
+            - note that in this case site storage needs to be reconfigured to send fireflies to the forwarder
 # local_site_collector - uses the following filters 01-input, 02-parsing, 05-calc-duration, 06-calc-throughput and 99-opensearch
             - optionally can use 70-cric-sites and 71-scitags to enrich existing data, both require to be initiated via scripts found in metadata/cric and metadata/scitags
             - output files must be shared with logstash container (via conf/logstash_data)
