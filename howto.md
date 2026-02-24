@@ -55,7 +55,7 @@ gfal-copy --scitag 132 \
 ### 4. Storage Systems (Data Transfer Agents)
 Software executing I/O that performs the physical packet marking or emits "Firefly" packets.
 
-Sample XRootD Configuration (/etc/xrootd/xrootd.cfg):
+Sample XRootD/EOS Configuration (/etc/xrootd/xrootd.cfg):
 ```bash
 
 # Direct fireflies to a local or remote collector
@@ -85,9 +85,13 @@ Sample dCache Configuration (dcache.conf):
 pool.enable.firefly=true
 pool.firefly.destination=collector.scitags.org:10514
 
+# (Optional) to enable storage statistics in fireflies
+pool.firefly.storageStatisticsEnabled=true
+# (Optional) to exclude local networks
+pool.firefly.excludes=a.b.c.d/16, aa:bb:cc:dd:ee:ff/64, v.x.w.z
+# Note that dCache will attempt to resolve default VO/activity from FQAN if available
+# directory mapping is not available in dCache
 ```
-
-Sample EOS configuration (same as xrootd)
 
 Sample StoRM configuration
 TBA
