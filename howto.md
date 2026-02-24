@@ -63,11 +63,10 @@ xrootd.pmark ffdest collector.scitags.org:10514
 xrootd.pmark domain any
 
 # (Optional)
-# Fallback configuration to mark experiments per directory (if scitags missing in the protocol)
+# Fallback configuration to map experiments to directories
+# this is only used if there is no information about exp/activity in the protocol (so non-FTS traffic)
 # defsfile location
 xrootd.pmark defsfile curl https://scitags.org/api.json
-# defsfile location for WLCG sites
-xrootd.pmark defsfile curl https://scitags.docs.cern.ch/api.json
 # multiple entries to map directory to VO (only VO listed in defsfile can be used)
 xrootd.pmark map2exp path /<path> <VO>
 # xrootd.pmark map2exp path /cephfs/experiments/atlas atlas
