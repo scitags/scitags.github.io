@@ -30,7 +30,7 @@ TBA
 
 ### 3. Transfer Services
 Brokers that receive the job and propagate metadata via headers or protocol parameters.
-File Transfer Service (FTS) support scitags from version 3.2.10 or higher, [gfal2](https://manpages.debian.org/unstable/gfal2-util-scripts/gfal-copy.1.en.html#scitag) library from version 2.21.0 
+**File Transfer Service (FTS)** support scitags from version 3.2.10 or higher, [gfal2](https://manpages.debian.org/unstable/gfal2-util-scripts/gfal-copy.1.en.html#scitag) library from version 2.21.0 
 
 ```
 In all the following examples scitag is an integer calculated using the following bit operations: 
@@ -77,14 +77,16 @@ xrdcp https://scr-ce.example.org/path/to/source.dat&scitag.flow=132 /dev/null
 
 Sample **curl** command:
 ```bash
-curl -v --insecure -H "SciTag: 313" --capath <ca_path> -s -L -f -u user:password -T /bin/bash https://dest-se.example.org/path/test-file-01
-curl -v --insecure -H "SciTag: 313" --capath <ca_path> -s -L -f -u root:password -o /tmp/test. https://src.example.org:2881/path/test-file-01
+curl -v --insecure -H "SciTag: 313" --capath <ca_path> -s -L -f -u user:password 
+     -T /bin/bash https://dest-se.example.org/path/test-file-01
+curl -v --insecure -H "SciTag: 313" --capath <ca_path> -s -L -f -u root:password
+     -o /tmp/test. https://src.example.org:2881/path/test-file-01
 ```
 
 ### 4. Storage Systems (Data Transfer Agents)
 Software executing I/O that performs the physical packet marking or emits "Firefly" packets.
 
-Sample **XRootD/EOS Configuration** (/etc/xrootd/xrootd.cfg):
+Sample **XRootD/EOS Configuration** (/etc/xrootd/xrootd.cfg; from xrootd 5.0+):
 ```bash
 
 # Direct fireflies to a global collector
@@ -109,7 +111,7 @@ xrootd.pmark map2act <vo> default default
 # xrootd.pmark map2act ska default default
 ```
 
-Sample **dCache Configuration** (dcache.conf):
+Sample **dCache Configuration** (dcache.conf; from dcache 11.2.1+):
 ```bash
 pool.enable.firefly=true
 pool.firefly.destination=collector.scitags.org:10514
