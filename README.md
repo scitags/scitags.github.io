@@ -22,6 +22,11 @@ The initiative offers an **open collaboration on the research and development o
 - Scitags: A Standardized Framework for Traffic Identification and Network Visibility in Data-Intensive Research Infrastructures, CHEP2025, EPJ Web Conf. to appear (2025, [pdf](https://www.scitags.org/assets/img/CHEP_2025.pdf))
 
 ### Upcoming and Past Events
+- May 2026: [CHEP 2026, Bangkok](https://indico.cern.ch/event/1471803/)
+- Apr 2026: [LHCOPN/LHCONE workshop, Montreal](https://indico.cern.ch/event/1602404/)
+- Nov 2025: [SuperComputing 2025, St.Louis](https://sc25.supercomputing.org/wp-content/uploads/2025/11/nre115s3.pdf)
+- Nov 2025: [Rucio Community Workshop, SKA, Jodrell Bank](https://indico.cern.ch/event/1545309/contributions/6749371/)
+- Oct 2025: [XRootD and FTS Workshop @ PIC](https://indico.cern.ch/event/1542060/contributions/6710220/)
 - May 2025: [GNA-G EU and US Community Calls](https://www.gna-g.net/attend-a-meeting/gna-g-community-vcs-q2-2025/)
 - April 2025: [22nd GEANT SIG-NOC meeting, Prague](https://wiki.geant.org/display/SIGNOC/22nd+SIG-NOC+meeting+-+Prague%2C+Czechia)
 - March 2025: [HEPiX Spring Workshop, Lugano](https://indico.cern.ch/event/1477299/contributions/6412763/)
