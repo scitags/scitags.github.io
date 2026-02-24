@@ -31,7 +31,10 @@ TBA
 ### 3. Transfer Services
 Brokers that receive the job and propagate metadata via headers or protocol parameters.
 File Transfer Service (FTS) support scitags from version 3.2.10 or higher, [gfal2](https://manpages.debian.org/unstable/gfal2-util-scripts/gfal-copy.1.en.html#scitag) library from version 2.21.0 
-For all transfer service scitag is an integer calculated using the following formula: <expID><<6|<actID> where expID and actID are relevant IDs from registry
+
+```
+Scitag is propagated between various systems as an integer calculated using the following formula: <expID><<6|<actID> where expID and actID are relevant IDs from registry
+```
 
 Sample **FTS** submissions:
 ```bash
