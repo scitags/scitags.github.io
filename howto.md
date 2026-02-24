@@ -79,7 +79,7 @@ Sample **curl** command:
 ```bash
 curl -v --insecure -H "SciTag: 313" --capath <ca_path> -s -L -f -u user:password 
      -T /bin/bash https://dest-se.example.org/path/test-file-01
-curl -v --insecure -H "SciTag: 313" --capath <ca_path> -s -L -f -u root:password
+curl -v --insecure -H "SciTag: 313" --capath <ca_path> -s -L -f -u user:password
      -o /tmp/test. https://src.example.org:2881/path/test-file-01
 ```
 
@@ -124,7 +124,7 @@ pool.firefly.excludes=a.b.c.d/16, aa:bb:cc:dd:ee:ff/64, v.x.w.z
 # directory mapping is not available in dCache
 ```
 
-Sample *StoRM configuration*
+Sample **StoRM configuration**
 TBA
 
 ### 5. Flow Services (flowd-go)
