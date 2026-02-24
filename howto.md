@@ -70,14 +70,14 @@ xrootd.pmark domain any
 xrootd.pmark defsfile curl https://scitags.org/api.json
 # multiple entries to map directory to VO (only VO listed in defsfile can be used)
 xrootd.pmark map2exp path /<path> <VO>
-# xrootd.pmark map2exp path /cephfs/experiments/atlas atlas
+# xrootd.pmark map2exp path /cephfs/experiments/ska ska
 
 # (Optional)
 # if none of the above matches then a default VO and activity can be defined
 xrootd.pmark map2exp default <vo>
-# rootd.pmark map2exp default atlas
+# rootd.pmark map2exp default ska
 xrootd.pmark map2act <vo> default default
-# xrootd.pmark map2act atlas default default
+# xrootd.pmark map2act ska default default
 ```
 
 Sample dCache Configuration (dcache.conf):
