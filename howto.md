@@ -65,7 +65,8 @@ xrootd.pmark domain any
 # (Optional)
 # Fallback configuration to map experiments to directories
 # this is only used if there is no information about exp/activity in the protocol (so non-FTS traffic)
-# defsfile location
+# defsfile location default
+# note that WLCG-specific defsfile location is different - please consult relevant experiment documentation
 xrootd.pmark defsfile curl https://scitags.org/api.json
 # multiple entries to map directory to VO (only VO listed in defsfile can be used)
 xrootd.pmark map2exp path /<path> <VO>
