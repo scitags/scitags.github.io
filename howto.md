@@ -86,7 +86,7 @@ curl -v --insecure -H "SciTag: 313" --capath <ca_path> -s -L -f -u user:password
 ### 4. Storage Systems (Data Transfer Agents)
 Software executing I/O that performs the physical packet marking or emits "Firefly" packets.
 
-Sample **XRootD/EOS Configuration** (/etc/xrootd/xrootd.cfg; from xrootd 5.0+):
+Sample **XRootD/EOS Configuration** (/etc/xrootd/xrootd.cfg; from xrootd 5.0+, [reference docs](https://xrootd.web.cern.ch/doc/dev57/xrd_config.htm#_Toc171719982)):
 ```bash
 
 # Direct fireflies to a global collector
@@ -192,16 +192,16 @@ docker run  --network=host --name firefly-stream -d  -v ./conf/logstash/:/usr/sh
 sample docker-compose.yml to run Opensearch in 2 containers (only accessible via localhost)
 
 services:
-  opensearch-node: # This is also the hostname of the container within the Docker network (i.e. https://opensearch-node1/)
-    image: opensearchproject/opensearch:latest # Specifying the latest available image - modify if you want a specific version
+  opensearch-node: 
+    image: opensearchproject/opensearch:latest 
     container_name: opensearch-node
     environment:
       - cluster.name=opensearch-cluster # Name the cluster
       - discovery.type=single-node
       - bootstrap.memory_lock=true # Disable JVM heap memory swapping
       - "OPENSEARCH_JAVA_OPTS=-Xms64g -Xmx64g" # Set min and max JVM heap sizes to at least 50% of system RAM
-      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}    # Sets the demo admin user password when using demo configuration, required for OpenSearch 2.12 and later
-      - "DISABLE_INSTALL_DEMO_CONFIG=true" # Prevents execution of bundled demo script which installs demo certificates and security configurations to OpenSearch
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}    
+      - "DISABLE_INSTALL_DEMO_CONFIG=true" 
       - "DISABLE_SECURITY_PLUGIN=true"
     ulimits:
       memlock:
@@ -211,21 +211,22 @@ services:
         soft: 65536 # Maximum number of open files for the opensearch user - set to at least 65536
         hard: 65536
     volumes:
-      - /opt/opensearch/vol:/usr/share/opensearch/data # Creates volume called opensearch-data1 and mounts it to the container
+      - /opt/opensearch/vol:/usr/share/opensearch/data # Maps /opt/opensearch as data volume (TBC)
     ports:
       - 9200:9200 # REST API
       - 9600:9600 # Performance Analyzer
     network_mode: 'host'
     privileged: true
   opensearch-dashboards:
-    image: opensearchproject/opensearch-dashboards:latest # Make sure the version of opensearch-dashboards matches the version of opensearch installed on other nodes
+    image: opensearchproject/opensearch-dashboards:latest 
     container_name: opensearch-dashboard
     depends: opensearch-node
     ports:
       - 5601:5601 # Map host port 5601 to container port 5601
     environment:
-      - 'OPENSEARCH_HOSTS: ["http://localhost:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
+      - 'OPENSEARCH_HOSTS: ["http://localhost:9200"]' 
       - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true"
     network_mode: 'host'
+
 ```
 
