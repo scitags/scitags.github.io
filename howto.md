@@ -173,19 +173,24 @@ total 44
 Simple forwarding can be achieved by keeping only 01-input, 02-parsing and 99-firefly-fwd.conf
 
 For a site collector one possible option is to run two independent logstash instances:
-# forwarder - collects all fireflies from a site and forwards them to two destinations: collector.scitags.org and local_site_collector
-            - this can be achieved by using 01-input, 02-parsing and then two copies of 99-firefly-fwd (one for collector.scitags.org, the other for local_site_collector)
+# forwarder - collects all fireflies from a site and forwards them to two destinations: 
+                   collector.scitags.org and local_site_collector
+            - this can be achieved by using 01-input, 02-parsing and then two copies of 99-firefly-fwd
+                   (one for collector.scitags.org, the other for local_site_collector)
             - note that in this case site storage needs to be reconfigured to send fireflies to the forwarder
 # local_site_collector - uses the following filters 01-input, 02-parsing, 05-calc-duration, 06-calc-throughput and 99-opensearch
-            - optionally can use 70-cric-sites and 71-scitags to enrich existing data, both require to be initiated via scripts found in metadata/cric and metadata/scitags
+            - optionally can use 70-cric-sites and 71-scitags to enrich existing data, both require to be initiated
+              via scripts found in metadata/cric and metadata/scitags
             - output files must be shared with logstash container (via conf/logstash_data)
 
-# logstash collector can be run from github repo directory via:
+# logstash collector(s) can be run from github repo directory via:
 docker run  --network=host --name firefly-stream -d  -v ./conf/logstash/:/usr/share/logstash/pipeline/
             -v ./conf/ruby/:/usr/lib/firefly/ruby/ -v ./conf/logstash_data/:/etc/stardust/pipeline/  
-            -t -e XPACK_MONITORING_ENABLED=false -v ./docker-entrypoint:/usr/local/bin/docker-entrypoint docker.elastic.co/logstash/logstash:7.17.19
+            -t -e XPACK_MONITORING_ENABLED=false -v ./docker-entrypoint:/usr/local/bin/docker-entrypoint 
+            docker.elastic.co/logstash/logstash:7.17.19
 
-# Sample Grafana dashboard that works with Opensearch and data enriched with cric and scitags is stored in firefly-collector/dashboards/Scitags Network Flows - OpenSearch.json
+# Sample Grafana dashboard that works with Opensearch and data enriched with cric and scitags is stored in
+# firefly-collector/dashboards/Scitags Network Flows - OpenSearch.json
 ```
 
 ```
