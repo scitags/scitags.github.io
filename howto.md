@@ -113,13 +113,12 @@ xrootd.pmark map2act <vo> default default
 # xrootd.pmark map2act ska default default
 ```
 
-Sample **dCache Configuration** (dcache.conf; from dcache 11.2.1+):
+Sample **dCache Configuration** (dcache.conf; from dcache 11.2.3+):
 ```bash
 pool.enable.firefly=true
 pool.firefly.destination=collector.scitags.org:10514
-
-# (Optional) to enable storage statistics in fireflies
 pool.firefly.storageStatisticsEnabled=true
+
 # (Optional) to exclude local networks
 pool.firefly.excludes=a.b.c.d/16, aa:bb:cc:dd:ee:ff/64, v.x.w.z
 # Note that dCache will attempt to resolve default VO/activity from FQAN if available
