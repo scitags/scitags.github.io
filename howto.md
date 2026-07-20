@@ -91,7 +91,7 @@ Sample **XRootD/EOS Configuration** (/etc/xrootd/xrootd.cfg; from xrootd 5.0+, [
 
 # Direct fireflies to a global collector
 xrootd.pmark ffdest collector.scitags.org:10514
-xrootd.pmark domain any
+xrootd.pmark domain remote
 
 # (Optional)
 # Fallback configuration to map experiments to directories
