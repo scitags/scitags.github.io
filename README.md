@@ -22,6 +22,10 @@ The initiative offers an **open collaboration on the research and development o
 - Scitags: A Standardized Framework for Traffic Identification and Network Visibility in Data-Intensive Research Infrastructures, CHEP2025, EPJ Web Conf. to appear (2025, [pdf](https://www.scitags.org/assets/img/CHEP_2025.pdf))
 
 ### Upcoming and Past Events
+- Nov 2026: Supercomputing 2026, Chicago
+- Oct 2026: Asia Tier Centre Forum (ATCF), Bangkok
+- Oct 2026: LHCOPN/LHCONE workshop, Naples
+- Sep 2026: GRP Workshop, Naples
 - May 2026: [CHEP 2026, Bangkok](https://indico.cern.ch/event/1471803/)
 - Apr 2026: [LHCOPN/LHCONE workshop, Montreal](https://indico.cern.ch/event/1602404/)
 - Nov 2025: [SuperComputing 2025, St.Louis](https://sc25.supercomputing.org/wp-content/uploads/2025/11/nre115s3.pdf)
