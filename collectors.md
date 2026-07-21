@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Firefly Collector is a packet collection and analysis pipeline for the LHC (Large Hadron Collider) scientific data transfer system. It ingests network flow metadata via UDP using the "firefly" protocol, enriches the data with site and experiment information, performs calculations, and stores the results for visualization and analysis.
+The Firefly Collector is a packet collection and analysis pipeline for any scientific data transfer system that supports fireflies (network telemetry). It ingests network flow metadata via UDP using the "firefly" protocol, enriches the data with site and experiment information, performs calculations, and stores the results for visualization and analysis.
 
 ### Pipeline Flow
 
