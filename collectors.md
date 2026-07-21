@@ -231,7 +231,7 @@ output {
 
 ### Minimal Forwarder
 
-Only parses and forwards - no enrichment or calculations:
+Only parses and forwards packets - no enrichment or calculations:
 
 ```yaml
 pipeline:
@@ -242,7 +242,7 @@ pipeline:
 
 ### (N)REN Collector
 
-Full processing with enrichment:
+Parsing and forwarding to NREN collector's message bus:
 
 ```yaml
 pipeline:
@@ -250,6 +250,16 @@ pipeline:
   - 02-parsing.conf
   - 99-kafka.conf
 ```
+
+### Global Collector
+Full processing pipeline including storage and dashboards:
+```yaml
+pipeline:
+  - 01-input.conf
+  - 02-parsing.conf
+  - 99-kafka.conf
+```
+
 
 ### Site Collector + Forwarder (Two Instances)
 
