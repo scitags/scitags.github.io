@@ -1,5 +1,25 @@
 # Firefly Collector Guide
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Pipeline Flow](#pipeline-flow)
+- [Components](#components)
+  - [1. Input (`01-input.conf`)](#1-input-01-inputconf)
+  - [2. Parsing (`02-parsing.conf`)](#2-parsing-02-parsingconf)
+  - [3. Duration Calculation (`05-calc-duration.conf`)](#3-duration-calculation-05-calc-durationconf)
+  - [4. Throughput Calculation (`06-calc-throughput.conf`)](#4-throughput-calculation-06-calc-throughputconf)
+  - [5. Post-Processing (`63-post-processing.conf`)](#5-post-processing-63-post-processingconf)
+  - [6. Local Traffic Filtering (`64-drop-local.conf`)](#6-local-traffic-filtering-64-drop-localconf)
+  - [7. CRIC Site Enrichment (`70-cric-sites.conf`)](#7-cric-site-enrichment-70-cric-sitesconf)
+  - [8. SciTags Experiment/Activity Enrichment (`71-scitags.conf`)](#8-scitags-experimentactivity-enrichment-71-scitagsconf)
+- [Metadata Generation Scripts](#metadata-generation-scripts)
+- [Output Options](#output-options)
+- [Sample Deployment Configurations](#sample-deployment-configurations)
+- [Logstash Deployment](#docker-deployment)
+- [Dashboard](#dashboard)
+- [Field Reference](#field-reference)
+
 ## Overview
 
 The Firefly Collector is a packet collection and analysis pipeline for any scientific data transfer system that supports fireflies (network telemetry). It ingests network flow metadata via UDP using the "firefly" protocol, enriches the data with site and experiment information, performs calculations, and stores the results for visualization and analysis.
@@ -136,6 +156,41 @@ Translates experiment and activity IDs to human-readable names.
 - `[meta][experiment]` - Human-readable experiment name (e.g., "ATLAS")
 - `[meta][activity]` - Human-readable activity name (e.g., "Real Data")
 
+## Global Collector Configuration
+
+The global collector configuration includes all available filters in the recommended processing order. This is used when you need full flow analysis with all enrichment data.
+
+```ruby
+# Input
+01-input.conf
+
+# Parsing
+02-parsing.conf
+
+# Calculations
+05-calc-duration.conf
+06-calc-throughput.conf
+
+# Post-processing (renames, direction normalization, pruning)
+63-post-processing.conf
+
+# Local traffic filtering (optional - skip if you want to keep all traffic)
+64-drop-local.conf
+
+# Site enrichment (requires cric.mmdb)
+70-cric-sites.conf
+
+# Experiment/activity enrichment (requires YAML maps)
+71-scitags.conf
+
+# Output (choose one: Opensearch, Kafka, or Forwarding)
+99-outputs.conf.example
+99-kafka.conf.example
+99-firefly-fwd.conf.example
+```
+
+**When to use:** Choose this configuration when you need complete flow data with site locations, experiment names, duration, throughput, and all enrichment for analysis, dashboards, and long-term storage.
+
 ## Metadata Generation Scripts
 
 ### CRIC Metadata Collector (`metadata/cric/cric_metadata_collector.py`)
@@ -189,88 +244,52 @@ Sends data to Opensearch/Elasticsearch with ILM (Index Lifecycle Management).
 - Index alias: `stardust_firefly`
 - Requires ILM policy and template prior to launch
 
+**Use case:** When you need long-term storage, search capabilities, and visualization with Kibana/OpenSearch/Grafana Dashboards.
+
 ### Forwarding (`99-firefly-fwd.conf.example`)
 
 Forwards raw firefly messages via UDP to another collector.
 
-**Use case:** Site forwarders that collect local fireflies and send to central collectors.
+**Use case:** Site forwarders that collect local fireflies and send to R&E collectors.
 
-### Kafka (`99-kafka.conf`)
+### Kafka (`99-kafka.conf.example`)
 
 Sends firefly messages to a Kafka bus for integration with the Research & Education (R&E) collector facility.
 
-**Use case:** R&E collector facilities connected to other collectors via Kafka bus, enabling:
-- Decoupled message distribution to multiple consumers
-- Scalable ingestion by downstream systems
-- Integration with Kafka-based data lakes and stream processing
-
 **Key settings:**
-- `bootstrap.servers` - Kafka broker addresses (comma-separated)
-- `topic` - Kafka topic for firefly messages
+- `bootstrap_servers` - Kafka broker addresses (comma-separated)
+- `topic_id` - Kafka topic for firefly messages
 - `acks` - Acknowledgment requirement (0, 1, or all)
 - `batch_size` - Number of messages to batch (default: 16384)
 - `linger_ms` - Time to wait for batch accumulation (default: 5)
 
-**Example configuration:**
-```ruby
-output {
-  kafka {
-    bootstrap_servers => "kafka1:9092,kafka2:9092,kafka3:9092"
-    topic_id => "firefly_flows"
-    codec => json
-    acks => "1"
-    batch_size => 16384
-    linger_ms => 5
-    compression_type => "snappy"
-    max_in_flight_requests => 5
-  }
-}
-```
+**Use case:** R&E collector facilities connected to other collectors via Kafka bus, enabling decoupled message distribution to multiple consumers, scalable ingestion by downstream systems, and integration with Kafka-based data lakes and stream processing.
 
 ## Sample Deployment Configurations
 
 ### Minimal Forwarder
 
-Only parses and forwards packets - no enrichment or calculations:
+**Pipeline:** `01-input.conf` + `02-parsing.conf` + `99-firefly-fwd.conf`
 
-```yaml
-pipeline:
-  - 01-input.conf
-  - 02-parsing.conf
-  - 99-firefly-fwd.conf
-```
+**Description:** Basic configuration that only parses incoming firefly packets and forwards them unchanged to another collector. Use this when you need a simple relay point with minimal processing overhead, such as a local site collector that forwards to a central collector.
 
-### (N)REN Collector
+### R&E Collector
 
-Parsing and forwarding to a global message bus:
+**Pipeline:** `01-input.conf` + `02-parsing.conf` + `99-kafka.conf.example`
 
-```yaml
-pipeline:
-  - 01-input.conf
-  - 02-parsing.conf
-  - 99-kafka.conf
-```
+**Description:** Parses fireflies and publishes them to a Kafka bus for integration within R&E network. Use this when you're setting up R&E collector to feed data to a global R&E collector facility.
 
-### Global Collector
-Full processing pipeline including storage and dashboards:
-```yaml
-pipeline:
-  - 01-input.conf
-  - 02-parsing.conf
-  - 99-kafka.conf
-```
-
-
-### Local/site Collector + Forwarder (Two Instances)
+### Site Forwarder + Local Collector (Two Logstash Instances)
 
 **Forwarder instance:**
-- Input + parsing + forwarding to central collector and local collector
+- Input + parsing + forwarding to central collector and/or Kafka bus
 
 **Local collector instance:**
 - Input + all filters + Opensearch output
-- Shares storage volume with forwarder
 
-## Deployment
+**Description:** Full processing pipeline that calculates duration and throughput, enriches data with site locations (CRIC) and experiment names (SciTags), then stores in Opensearch for visualization. Use this at a local site that wants to maintain its own analysis and dashboard capabilities while at the same time forwarding to a central collector. Two separate Logstash instances running on the same site. The forwarder handles quick relay of fireflies to central systems, while the local collector performs full enrichment and storage for site-specific analysis. 
+
+## Logstash Deployment
 
 ```bash
 docker run \
@@ -284,8 +303,9 @@ docker run \
   docker.elastic.co/logstash/logstash:7.17.19
 ```
 
-### Docker Compose (with Opensearch + Dashboards)
-This only applies to *Site collector + forwarder* configuration, it shows how to run Opensearch and its dashboards alongside logstash
+### Opensearch Deployment (Docker Compose)
+
+This setup is recommended for the *Local/site Collector* configuration where you need a complete stack running on a single site.
 
 ```yaml
 version: '3'
@@ -320,7 +340,7 @@ services:
 
 ## Dashboard
 
-Sample Grafana/OpenSearch dashboard: `dashboards/Scitags Network Flows - OpenSearch.json`. This requires a separate grafana container.
+Sample OpenSearch dashboard: `dashboards/Scitags Network Flows - OpenSearch.json`
 
 Supports:
 - Site-based filtering (WLCG CRIC sites)
@@ -328,6 +348,8 @@ Supports:
 - Activity filtering (Real Data, Simulations, etc.)
 - Geographic visualization
 - Performance metrics (throughput, duration)
+
+**Note:** The dashboard file is for OpenSearch Dashboards. For Grafana, import the dashboard JSON and configure as a data source.
 
 ## Field Reference
 
@@ -374,4 +396,4 @@ Supports:
 - The pipeline requires both `cric.mmdb` and YAML maps for full enrichment functionality
 - Site normalization ensures `sent` is the larger value (except for http-put/http-get)
 - Local traffic filtering requires site enrichment to be effective
-  
+- For the Kafka output, install the Logstash Kafka plugin: `bin/logstash-plugin install logstash-output-kafka`
