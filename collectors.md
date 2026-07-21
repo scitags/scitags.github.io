@@ -227,7 +227,7 @@ output {
 }
 ```
 
-## Sample Deployments
+## Sample Deployment Configurations
 
 ### Minimal Forwarder
 
@@ -242,7 +242,7 @@ pipeline:
 
 ### (N)REN Collector
 
-Parsing and forwarding to NREN collector's message bus:
+Parsing and forwarding to a global message bus:
 
 ```yaml
 pipeline:
@@ -261,7 +261,7 @@ pipeline:
 ```
 
 
-### Site Collector + Forwarder (Two Instances)
+### Local/site Collector + Forwarder (Two Instances)
 
 **Forwarder instance:**
 - Input + parsing + forwarding to central collector and local collector
@@ -270,7 +270,7 @@ pipeline:
 - Input + all filters + Opensearch output
 - Shares storage volume with forwarder
 
-## Docker Deployment
+## Deployment
 
 ```bash
 docker run \
@@ -284,7 +284,7 @@ docker run \
   docker.elastic.co/logstash/logstash:7.17.19
 ```
 
-### Docker Compose (Opensearch + Dashboards)
+### Docker Compose (with Opensearch + Dashboards)
 This only applies to *Site collector + forwarder* configuration, it shows how to run Opensearch and its dashboards alongside logstash
 
 ```yaml
