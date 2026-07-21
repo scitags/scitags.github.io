@@ -8,6 +8,7 @@ The following table summarizes the main component classes in the Scitags framewo
 |  [Storage Systems (Data Transfer Agents)](#4-storage-systems-data-transfer-agents) | The physical server nodes executing the high-throughput disk-to-network input/output operations. They accept the SciTag from the transfer service and must inject it into the network layer via flow services or directly by sending fireflies to collectors. | [XRootD (pmark)](https://github.com/xrootd/xrootd), [dCache](https://github.com/dCache/dcache), [EOS](https://github.com/cern-eos/eos), [StoRM](https://github.com/italiangrid/storm) |
 | [Flow Service](#5-flow-services-flowd-go) | Lightweight node-level agents that monitor kernel sockets to emit UDP Fireflies, and optionally, can perform packet marking  | [flowd-go](https://github.com/scitags/flowd-go) |
 | [Collectors](https://github.com/scitags/scitags.github.io/blob/main/collectors.md) | Distributed, big-data aggregation pipelines that ingest, parse, store, and visualize the incoming global telemetry stream. | [firefly-collector](https://github.com/scitags/firefly-collector) | 
+| [Dashboards](https://dashboard.stardust.es.net/goto/efsrfifb2kjy8d?orgId=2) | Dashboards showing a global view based on the fireflies collected | [ESnet Dashboard](https://dashboard.stardust.es.net/goto/efsrfifb2kjy8d?orgId=2) |
 
 ### 1. Central Registry
 The source of truth that maps scientific domains/experiments (e.g., ATLAS, CMS) and their specific activities to standardized integer IDs.
