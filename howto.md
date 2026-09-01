@@ -127,7 +127,22 @@ pool.firefly.excludes=a.b.c.d/16, aa:bb:cc:dd:ee:ff/64, v.x.w.z
 ```
 
 Sample **StoRM configuration**
-TBA
+
+StoRM relies on flowd-go service to send the fireflies.
+
+Sample configuration of flowd-go to be used with StoRM:
+```json
+plugins:
+   namedPipe:
+       pipePath: "/var/run/flowd"
+
+backends:
+   firefly: {
+       stun: {},
+       sendToCollector: true,
+       collectorAddress: collector.scitags.org
+   }
+```
 
 ### 5. Flow Services (flowd-go)
 Lightweight agents monitoring sockets to assist in telemetry emission.
