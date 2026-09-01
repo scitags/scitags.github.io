@@ -131,7 +131,7 @@ Sample **StoRM configuration**
 StoRM relies on flowd-go service to send the fireflies.
 
 Sample configuration of flowd-go to be used with StoRM:
-```json
+```
 plugins:
    namedPipe:
        pipePath: "/var/run/flowd"
