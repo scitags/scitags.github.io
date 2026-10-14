@@ -118,7 +118,7 @@ Sample **dCache Configuration** (dcache.conf; from dcache 11.2.3+):
 ```bash
 pool.enable.firefly=true
 pool.firefly.destination=collector.scitags.org:10514
-pool.firefly.storageStatisticsEnabled=true
+pool.firefly.storage-statistics=true
 
 # (Optional) to exclude local networks
 pool.firefly.excludes=a.b.c.d/16, aa:bb:cc:dd:ee:ff/64, v.x.w.z
