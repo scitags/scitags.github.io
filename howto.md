@@ -144,6 +144,15 @@ backends:
    }
 ```
 
+**Verification steps:**
+```
+    a) tcpdump -nn -i any udp port 10514 on a pool/data server
+       shows packets to the collector;
+    b) your site appears on the Scitags dashboard within 48 h
+    c) please check your IP prefixes are listed in WLCG CRIC (under netsites/netroutes)
+    If (a) passes but (b) does not, please contact support.
+```
+
 ### 5. Flow Services (flowd-go)
 Lightweight agents monitoring sockets to assist in telemetry emission.
 
