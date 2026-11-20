@@ -63,10 +63,11 @@
 
   <section class="facts" aria-label="SciTags in numbers">
     <div class="wrap">
-      <div class="fact"><strong>14</strong><span>experiments in the registry</span></div>
-      <div class="fact"><strong>12</strong><span>participating networks and software projects</span></div>
-      <div class="fact"><strong>4</strong><span>storage and transfer tools with tagging built in</span></div>
-      <div class="fact"><strong>37</strong><span>talks and demos since 2021</span></div>
+      <div class="fact"><strong>561M</strong><span>fireflies collected in one week</span></div>
+      <div class="fact"><strong>45.8 PB</strong><span>of transfers described in that week</span></div>
+      <div class="fact"><strong>95</strong><span>WLCG sites in tagged traffic</span></div>
+      <div class="fact"><strong>1.52 Tbps</strong><span>packet marking at SC26</span></div>
+      <p class="fact-note">Week of 12–19 November 2026, ESnet collector. <a href="https://dashboard.stardust.es.net/d/b6d7dc1e-dc56-4f39-abe0-a9e7199021f8/scitags-network-flows-v3">See the live dashboard</a>.</p>
     </div>
   </section>
 
@@ -101,15 +102,15 @@
     </div>
     <ol class="steps">
       <li><span class="num">01</span><h3>Registry</h3><p>Maps each experiment and activity to a number, published as JSON.</p></li>
-      <li><span class="num">02</span><h3>Request</h3><p>Rucio, FTS or a client like gfal-copy attaches the tag to the transfer.</p></li>
-      <li><span class="num">03</span><h3>Marking</h3><p>The storage node moving the data (XRootD, dCache, StoRM) sends fireflies or marks the packets.</p></li>
-      <li><span class="num">04</span><h3>Collection</h3><p>Collectors receive the fireflies, add site and experiment details and store them.</p></li>
-      <li><span class="num">05</span><h3>Insight</h3><p>Dashboards give a global view of scientific traffic by experiment and activity.</p></li>
+      <li><span class="num">02</span><h3>Request</h3><p>Rucio, FTS, DIRAC or ALICE O2 attaches the tag to the transfer; all four do this in production.</p></li>
+      <li><span class="num">03</span><h3>Marking</h3><p>The storage node moving the data (dCache, XRootD, EOS, StoRM) sends fireflies or marks the packets.</p></li>
+      <li><span class="num">04</span><h3>Collection</h3><p>Regional collectors run by ESnet, Jisc and GÉANT receive the fireflies and add site and experiment details.</p></li>
+      <li><span class="num">05</span><h3>Insight</h3><p>The <a href="https://dashboard.stardust.es.net/d/b6d7dc1e-dc56-4f39-abe0-a9e7199021f8/scitags-network-flows-v3">ESnet Stardust dashboard</a> shows scientific traffic by experiment, activity and site.</p></li>
     </ol>
     <div class="cards">
       <div class="card dark">
         <h3>Fireflies</h3>
-        <p>A small UDP packet a storage node sends to a collector, describing one flow: its endpoints, experiment and activity. Works on any network today, no router changes needed.</p>
+        <p>A small UDP packet a storage node sends to a collector, describing one flow: its endpoints, experiment, activity and bytes moved. Works on any network today, no router changes needed. The collector name points each site at the nearest regional collector.</p>
         <pre>udp → collector.scitags.org:10514</pre>
       </div>
       <div class="card wide">
@@ -129,18 +130,18 @@
       <div class="cards">
         <div class="card white">
           <h3>I run storage</h3>
-          <p>Turn on fireflies in dCache 11.2.3+ or XRootD 5.0+.</p>
+          <p>Turn on fireflies in dCache 11.2.4+, XRootD 5.0+ or EOS 5.2.19+, open outbound UDP 10514, and check your prefixes in CRIC.</p>
           <pre><span class="c"># dcache.conf</span>
 pool.enable.firefly=true
 pool.firefly.destination=collector.scitags.org:10514</pre>
-          <a class="more" href="docs/#4-storage-systems-data-transfer-agents">Storage setup guide →</a>
+          <a class="more" href="docs/">Site checklist →</a>
         </div>
         <div class="card white">
           <h3>I move data</h3>
-          <p>Pass the tag with FTS 3.2.10+, gfal2 2.21.0+, xrdcp or an HTTP header.</p>
+          <p>Pass the tag with Rucio 32.4.0+, FTS 3.12.11+, DIRAC 9.0.8+, gfal2 2.21.0+, xrdcp or an HTTP header.</p>
           <pre><span class="c"># scitag = expID &lt;&lt; 6 | actID</span>
 gfal-copy --scitag 132 &lt;src&gt; &lt;dst&gt;</pre>
-          <a class="more" href="docs/#3-transfer-services">Transfer services guide →</a>
+          <a class="more" href="docs/components.html#3-transfer-services">Transfer services guide →</a>
         </div>
         <div class="card white">
           <h3>I run a network</h3>
@@ -184,7 +185,44 @@ gfal-copy --scitag 132 &lt;src&gt; &lt;dst&gt;</pre>
       <a class="repo" href="https://github.com/scitags/go-diag"><strong><img src="assets/img/favicon.svg" alt="">go-diag</strong><span>C-binding-free Go API for the kernel's socket subsystem.</span></a>
       <a class="repo" href="https://github.com/scitags/gbpf"><strong><img src="assets/img/favicon.svg" alt="">gbpf</strong><span>A userspace eBPF VM written in Go.</span></a>
     </div>
-    <p class="note">Tagging is also built into XRootD 5.0+, dCache 11.2.3+, FTS 3.2.10+ and gfal2 2.21.0+; StoRM uses flowd-go.</p>
+    <p class="note">Tagging is also built into dCache 11.2.4+, XRootD 5.0+, EOS 5.2.19+, FTS 3.12.11+, gfal2 2.21.0+, Rucio 32.4.0+, DIRAC 9.0.8+ and ALICE O2, and Pelican support has been merged. StoRM 1.4.3+ sends fireflies through flowd-go; its known issues are under investigation, with an update expected in December 2026.</p>
+  </section>
+
+  <div class="band">
+    <section class="wrap section">
+      <div class="section-head">
+        <p class="eyebrow">Demonstrations</p>
+        <h2>Packet marking at terabit speed</h2>
+        <p>Each year at the Supercomputing conference, the SciTags team marks live traffic between research sites with flowd-go, writing the tags into the IPv6 flow label and extension headers.</p>
+      </div>
+      <ol class="steps">
+        <li><span class="num">SC24 · Atlanta</span><h3>240 Gbps</h3><p>Packet marking between two servers, using the IPv6 flow label and extension headers.</p></li>
+        <li><span class="num">SC25 · St. Louis</span><h3>1.1 Tbps</h3><p>Three 400 Gbps paths between data transfer nodes at StarLight in Chicago and in St. Louis.</p></li>
+        <li><span class="num">SC26 · Chicago</span><h3>1.52 Tbps</h3><p>From the University of Victoria to the SC26 exhibition floor in Chicago, against a 1.6 Tbps target.</p></li>
+      </ol>
+    </section>
+  </div>
+
+  <section class="wrap section first">
+    <div class="section-head">
+      <p class="eyebrow">What's next</p>
+      <h2>Toward the 2027 Data Challenge</h2>
+      <p>The next WLCG Data Challenge, DC27, is planned for early 2027 (currently 22 February to 5 March). Its goal for SciTags is to identify at least 80% of WLCG traffic.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h3>Every storage site</h3>
+        <p>ATLAS is asking every storage site to enable fireflies before DC27. The <a href="docs/">site checklist</a> covers the steps.</p>
+      </div>
+      <div class="card">
+        <h3>Every prefix in CRIC</h3>
+        <p>About half of today's fireflies cannot be attributed to a site because the site's network prefixes are missing from WLCG CRIC.</p>
+      </div>
+      <div class="card">
+        <h3>More collectors and views</h3>
+        <p>An Asia/Pacific collector is planned, as is a dashboard view that shows each site which of its hosts are sending.</p>
+      </div>
+    </div>
   </section>
 
   <section class="wrap section">
@@ -218,17 +256,18 @@ gfal-copy --scitag 132 &lt;src&gt; &lt;dst&gt;</pre>
       <div>
         <h2 class="small">Events</h2>
         <ul class="event-list">
-          <li><span class="when">Nov 2026</span><span class="what">Supercomputing 2026, Chicago</span></li>
+          <li><span class="when">Nov 2026</span><span class="what">Supercomputing 2026, Chicago: 1.52 Tbps packet marking demo</span></li>
+          <li><span class="when">Nov 2026</span><span class="what">WLCG/HSF Workshop 2026, Bologna</span></li>
+          <li><span class="when">Oct 2026</span><span class="what"><a href="https://indico.cern.ch/event/1679145/">HEPiX Fall 2026 Workshop, Lincoln, Nebraska</a></span></li>
           <li><span class="when">Oct 2026</span><span class="what">Asia Tier Centre Forum (ATCF), Bangkok</span></li>
           <li><span class="when">Oct 2026</span><span class="what">LHCOPN/LHCONE workshop, Naples</span></li>
-          <li><span class="when">Sep 2026</span><span class="what">GRP Workshop, Naples</span></li>
-          <li><span class="when">May 2026</span><span class="what"><a href="https://indico.cern.ch/event/1471803/">CHEP 2026, Bangkok</a></span></li>
         </ul>
-        <a class="more" href="events/">All 37 events since 2021 →</a>
+        <a class="more" href="events/">All 42 events since 2021 →</a>
       </div>
       <div>
         <h2 class="small">Publications</h2>
         <div class="pubs">
+          <div class="pub"><span class="venue">CHEP 2026 · proceedings forthcoming</span><span class="title">Scitags at Scale: Terabit Packet Marking and WLCG Data Challenge Readiness</span></div>
           <a class="pub" href="https://www.scitags.org/assets/img/CHEP_2025.pdf"><span class="venue">CHEP 2025 · EPJ Web of Conferences · PDF</span><span class="title">Scitags: A Standardized Framework for Traffic Identification and Network Visibility in Data-Intensive Research Infrastructures</span></a>
           <a class="pub" href="https://www.scitags.org/assets/img/chep_paper23.pdf"><span class="venue">CHEP 2023 · EPJ Web of Conferences · PDF</span><span class="title">Identifying and Understanding Scientific Network Flows</span></a>
           <a class="pub" href="https://datatracker.ietf.org/doc/draft-cc-v6ops-wlcg-flow-label-marking/"><span class="venue">IETF Internet-Draft</span><span class="title">Use of the IPv6 Flow Label for WLCG Packet Marking</span></a>
@@ -259,7 +298,7 @@ gfal-copy --scitag 132 &lt;src&gt; &lt;dst&gt;</pre>
     </div>
     <nav aria-label="Footer">
       <div><p>Project</p><a href="#how">How it works</a><a href="events/">Events</a><a href="events/#pubs">Publications</a></div>
-      <div><p>Docs</p><a href="docs/">Get started</a><a href="docs/collectors.html">Collectors</a><a href="https://www.scitags.org/api.json">Registry API</a></div>
+      <div><p>Docs</p><a href="docs/">Site checklist</a><a href="docs/components.html">Component reference</a><a href="docs/collectors.html">Collectors</a><a href="https://www.scitags.org/api.json">Registry API</a></div>
       <div><p>Community</p><a href="https://github.com/scitags">GitHub</a><a href="https://groups-portal.web.cern.ch/group/net-wg/">Mailing list</a></div>
     </nav>
   </div>

@@ -2,7 +2,18 @@
  {
   "year": "2026",
   "month": "Nov",
-  "title": "Supercomputing 2026, Chicago"
+  "title": "Supercomputing 2026, Chicago: NRE demo, 1.52 Tbps packet marking from UVic to the show floor"
+ },
+ {
+  "year": "2026",
+  "month": "Nov",
+  "title": "WLCG/HSF Workshop 2026, Bologna: Network Readiness for DC27"
+ },
+ {
+  "year": "2026",
+  "month": "Oct",
+  "title": "HEPiX Fall 2026 Workshop, Lincoln, Nebraska: WLCG Network Visibility",
+  "url": "https://indico.cern.ch/event/1679145/"
  },
  {
   "year": "2026",
@@ -22,6 +33,11 @@
  {
   "year": "2026",
   "month": "May",
+  "title": "20th International dCache Workshop: SciTags / Firefly status and results"
+ },
+ {
+  "year": "2026",
+  "month": "May",
   "title": "CHEP 2026, Bangkok",
   "url": "https://indico.cern.ch/event/1471803/"
  },
@@ -30,6 +46,12 @@
   "month": "Apr",
   "title": "LHCOPN/LHCONE workshop, Montreal",
   "url": "https://indico.cern.ch/event/1602404/"
+ },
+ {
+  "year": "2026",
+  "month": "Jan",
+  "title": "HEPiX IPv6 Working Group: Updates from perfSONAR, SciTags and the RNTWG",
+  "url": "https://indico.cern.ch/event/1608816/"
  },
  {
   "year": "2025",
@@ -48,6 +70,11 @@
   "month": "Oct",
   "title": "XRootD and FTS Workshop @ PIC",
   "url": "https://indico.cern.ch/event/1542060/contributions/6710220/"
+ },
+ {
+  "year": "2025",
+  "month": "Oct",
+  "title": "LHCOPN/LHCONE Workshop #55"
  },
  {
   "year": "2025",

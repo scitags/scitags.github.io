@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Component reference · SciTags (draft)</title>
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@500;700&display=swap">
+  <link rel="stylesheet" href="../assets/draft.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="draft-banner"><div class="wrap"><span>Draft redesign for review, not yet the official site.</span><a href="../../">Go to the current scitags.org</a></div></div>
+<header class="site-header light">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/img/scitags-logo.svg" alt="SciTags home"></a>
+    <nav aria-label="Main">
+      <a href="../">Home</a>
+      <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../events/">Events</a>
+      <a class="nav-button" href="https://github.com/scitags">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs">
+    <div>
+      <p class="group-title">Guides</p>
+      <ul><li><a href="./">Site checklist</a></li><li><a href="components.html" aria-current="page">Component reference</a><ul><li><a href="#1-central-registry">1. Central Registry</a></li><li><a href="#2-data-management-systems-orchestrators">2. Data Management Systems (Orchestrators)</a></li><li><a href="#3-transfer-services">3. Transfer Services</a></li><li><a href="#4-storage-systems-data-transfer-agents">4. Storage Systems (Data Transfer Agents)</a></li><li><a href="#5-flow-services-flowd-go">5. Flow Services (flowd-go)</a></li></ul></li><li><a href="collectors.html">Firefly collector guide</a></li></ul>
+    </div>
+    <div>
+      <p class="group-title">Reference</p>
+      <ul>
+        <li><a href="https://www.scitags.org/api.json">Registry (api.json)</a></li>
+        <li><a href="https://github.com/scitags/scitags.github.io/blob/main/schemas/v1.0.0/firefly.schema.json">Firefly schema v1.0.0</a></li>
+        <li><a href="https://github.com/scitags/scitags.github.io/blob/main/schemas/v1.0.0/registry.schema.json">Registry schema v1.0.0</a></li>
+        <li><a href="https://datatracker.ietf.org/doc/draft-cc-v6ops-wlcg-flow-label-marking/">IPv6 flow label draft</a></li>
+      </ul>
+    </div>
+  </nav>
+  <article class="docs-main">
+    <p class="crumbs">Docs / Component reference</p>
+    <div class="prose">
+<h1>Component reference</h1>
+<p>The following table summarizes the main component classes in the Scitags framework architecture</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Component Class</th>
+<th style="text-align: left;">Role within the SciTags Topography</th>
+<th style="text-align: left;">Prominent Implementations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><a href="#1-central-registry">Central Registry</a></td>
+<td style="text-align: left;">Maintains the globally authoritative mapping of Virtual Organization (VO) names and specific computational activities to standardized numerical SciTag IDs.</td>
+<td style="text-align: left;"><a href="https://scitags.org/api.json">Scitags API</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#2-data-management-systems-orchestrators">Data Management Systems (Orchestrators)</a></td>
+<td style="text-align: left;">The origin point of the data transfer intent. These distributed systems possess the required contextual knowledge of exactly why a file is being moved. They formulate the initial SciTag and pass it to the transfer scheduling services.</td>
+<td style="text-align: left;"><a href="https://github.com/rucio/rucio">Rucio</a>, <a href="https://github.com/DIRACGrid/DIRAC">DIRAC</a>, <a href="https://github.com/AliceO2Group/AliceO2">ALICE O2</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#3-transfer-services">Transfer Services</a></td>
+<td style="text-align: left;">Intermediary scheduling brokers that manage the execution queues. They receive the job from the orchestrator and actively push the SciTag metadata to the physical storage nodes during protocol negotiation.</td>
+<td style="text-align: left;"><a href="https://github.com/cern-fts/fts3">FTS (File Transfer Service)</a>, <a href="https://github.com/cern-fts/gfal2">gfal2</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#4-storage-systems-data-transfer-agents">Storage Systems (Data Transfer Agents)</a></td>
+<td style="text-align: left;">The physical server nodes executing the high-throughput disk-to-network input/output operations. They accept the SciTag from the transfer service and must inject it into the network layer via flow services or directly by sending fireflies to collectors.</td>
+<td style="text-align: left;"><a href="https://github.com/xrootd/xrootd">XRootD (pmark)</a>, <a href="https://github.com/dCache/dcache">dCache</a>, <a href="https://github.com/cern-eos/eos">EOS</a>, <a href="https://github.com/italiangrid/storm">StoRM</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#5-flow-services-flowd-go">Flow Service</a></td>
+<td style="text-align: left;">Lightweight node-level agents that monitor kernel sockets to emit UDP Fireflies, and optionally, can perform packet marking. This service is optional and focuses mainly on R&amp;D.</td>
+<td style="text-align: left;"><a href="https://github.com/scitags/flowd-go">flowd-go</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/scitags/firefly-collector/blob/main/README.md">Collectors</a></td>
+<td style="text-align: left;">Distributed, big-data aggregation pipelines that collect, parse, store and calculate base metrics from the incoming global firefly/telemetry stream.</td>
+<td style="text-align: left;"><a href="https://github.com/scitags/firefly-collector">firefly-collector</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://dashboard.stardust.es.net/goto/efsrfifb2kjy8d?orgId=2">Dashboards</a></td>
+<td style="text-align: left;">Dashboards showing a global view based on the fireflies collected</td>
+<td style="text-align: left;"><a href="https://dashboard.stardust.es.net/goto/efsrfifb2kjy8d?orgId=2">ESnet Dashboard</a></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="1-central-registry">1. Central Registry</h3>
+<p>The source of truth that maps scientific domains/experiments (e.g., ATLAS, CMS) and their specific activities to standardized integer IDs.</p>
+<pre><code class="language-json">{
+  &quot;experiments&quot;: [
+    {&quot;name&quot;: &quot;ATLAS&quot;, &quot;exp_id&quot;: 1},
+    {&quot;name&quot;: &quot;CMS&quot;, &quot;exp_id&quot;: 2}
+  ],
+  &quot;activities&quot;: [
+    {&quot;name&quot;: &quot;Data Consolidation&quot;, &quot;activity_id&quot;: 4},
+    {&quot;name&quot;: &quot;Production&quot;, &quot;activity_id&quot;: 5}
+  ]
+}
+</code></pre>
+<h3 id="2-data-management-systems-orchestrators">2. Data Management Systems (Orchestrators)</h3>
+<p>TBA </p>
+<h3 id="3-transfer-services">3. Transfer Services</h3>
+<p>Brokers that receive the job and propagate metadata via headers or protocol parameters.
+<strong>File Transfer Service (FTS)</strong> support scitags from version 3.2.10 or higher, <a href="https://manpages.debian.org/unstable/gfal2-util-scripts/gfal-copy.1.en.html#scitag">gfal2</a> library from version 2.21.0 </p>
+<pre><code>In all the following examples scitag is an integer calculated using the following bit operations: 
+scitag = expID &lt;&lt;6| actID where expID and actID are relevant IDs from registry
+</code></pre>
+<p>Sample <strong>FTS</strong> submissions:</p>
+<pre><code class="language-bash">From the command line
+$ fts-rest-transfer-submit --scitag &lt;scitag&gt; -s &lt;fts-endpoint&gt; &lt;src&gt; &lt;dst&gt;
+
+From the Python module
+import fts3.rest.client.easy as fts3
+
+fts3.new_transfer(.., scitag=&lt;scitag&gt;, ..)
+
+Via the REST API (JSON format)
+{
+  &quot;files&quot;: [
+    {
+      &quot;sources&quot;: [ &quot;&lt;src&gt;&quot; ],
+      &quot;destinations&quot;: [ &quot;&lt;dst&gt;&quot; ],
+      &quot;scitag&quot;: 65  # must be integer type
+    }
+  ],
+  &quot;params&quot;: {
+    &quot;key&quot;: &quot;value&quot;
+  }
+}
+</code></pre>
+<p>Sample <strong>gfal-copy</strong> command:</p>
+<pre><code class="language-bash"># Transferring a file with SciTag 132 (e.g., CMS Analysis)
+gfal-copy --scitag 132 \
+          https://src-ce.example.org/path/to/source.dat \
+          https://dest-se.example.org/path/to/destination.dat
+</code></pre>
+<p>Sample <strong>xrdcp</strong> command:</p>
+<pre><code class="language-bash">xrdcp https://scr-ce.example.org/path/to/source.dat&amp;scitag.flow=132 /dev/null
+</code></pre>
+<p>Sample <strong>curl</strong> command:</p>
+<pre><code class="language-bash">curl -v --insecure -H &quot;SciTag: 313&quot; --capath &lt;ca_path&gt; -s -L -f -u user:password 
+     -T /bin/bash https://dest-se.example.org/path/test-file-01
+curl -v --insecure -H &quot;SciTag: 313&quot; --capath &lt;ca_path&gt; -s -L -f -u user:password
+     -o /tmp/test. https://src.example.org:2881/path/test-file-01
+</code></pre>
+<h3 id="4-storage-systems-data-transfer-agents">4. Storage Systems (Data Transfer Agents)</h3>
+<p>Software executing I/O that performs the physical packet marking or emits "Firefly" packets.</p>
+<p>Sample <strong>XRootD/EOS Configuration</strong> (/etc/xrootd/xrootd.cfg; from xrootd 5.0+, <a href="https://xrootd.web.cern.ch/doc/dev57/xrd_config.htm#_Toc171719982">reference docs</a>):</p>
+<pre><code class="language-bash">
+# Direct fireflies to a global collector
+xrootd.pmark ffdest collector.scitags.org:10514
+xrootd.pmark domain remote
+
+# (Optional)
+# Fallback configuration to map experiments to directories
+# this is only used if there is no information about exp/activity in the protocol (so non-FTS traffic)
+# defsfile location default
+# note that this is WLCG-specific defsfile location 
+xrootd.pmark defsfile curl https://scitags.docs.cern.ch/api.json
+# sites not associated with WLCG should use public endpoint at https://scitags.org/api.json
+
+# multiple entries to map directory to VO (only VO listed in defsfile can be used)
+xrootd.pmark map2exp path /&lt;path&gt; &lt;VO&gt;
+# xrootd.pmark map2exp path /cephfs/experiments/ska ska
+
+# (Optional)
+# if none of the above matches then a default VO and activity can be defined
+xrootd.pmark map2exp default &lt;vo&gt;
+# rootd.pmark map2exp default ska
+xrootd.pmark map2act &lt;vo&gt; default default
+# xrootd.pmark map2act ska default default
+</code></pre>
+<p>Sample <strong>dCache Configuration</strong> (dcache.conf; from dcache 11.2.3+):</p>
+<pre><code class="language-bash">pool.enable.firefly=true
+pool.firefly.destination=collector.scitags.org:10514
+pool.firefly.storage-statistics=true
+
+# (Optional) to exclude local networks
+pool.firefly.excludes=a.b.c.d/16, aa:bb:cc:dd:ee:ff/64, v.x.w.z
+# Note that dCache will attempt to resolve default VO/activity from FQAN if available
+# directory mapping is not available in dCache
+</code></pre>
+<p>Sample <strong>StoRM configuration</strong></p>
+<p>StoRM relies on flowd-go service to send the fireflies.</p>
+<p>Sample configuration of flowd-go to be used with StoRM:</p>
+<pre><code>plugins:
+   namedPipe:
+       pipePath: &quot;/var/run/flowd&quot;
+
+backends:
+   firefly: {
+       stun: {},
+       sendToCollector: true,
+       collectorAddress: collector.scitags.org
+   }
+</code></pre>
+<p><strong>Verification steps:</strong></p>
+<pre><code>    a) tcpdump -nn -i any udp port 10514 on a pool/data server
+       shows packets to the collector;
+    b) your site appears on the Scitags dashboard within 48 h
+    c) please check your IP prefixes are listed in WLCG CRIC (under netsites/netroutes)
+    If (a) passes but (b) does not, please contact support.
+</code></pre>
+<h3 id="5-flow-services-flowd-go">5. Flow Services (flowd-go)</h3>
+<p>Lightweight agents monitoring sockets to assist in telemetry emission.</p>
+<p>Sample flowd-go config (conf.json):</p>
+<pre><code class="language-json">{
+  &quot;settings&quot;: {
+    &quot;plugin&quot;: &quot;&quot;,
+    &quot;backends&quot;: [&quot;udp_firefly&quot;],
+    &quot;flow_map_api&quot;: &quot;https://scitags.org/api.json&quot;
+  },
+  &quot;firefly&quot;: {
+    &quot;collector_host&quot;: &quot;collector.scitags.org&quot;,
+    &quot;collector_port&quot;: 10514
+  }
+}
+</code></pre>
+    </div>
+    <div class="docs-foot">
+      <a href="https://github.com/scitags/scitags.github.io/blob/main/howto.md">Edit this page on GitHub</a>
+      <span>Generated from howto.md</span>
+    </div>
+  </article>
+</div>
+</main>
+<footer class="site-footer">
+  <div class="wrap top">
+    <div class="about">
+      <img src="../assets/img/scitags-logo-dark.svg" alt="SciTags">
+      <p>Scientific Network Tags: identifying science domains and their activities at the network level.</p>
+    </div>
+    <nav aria-label="Footer">
+      <div><p>Project</p><a href="../#how">How it works</a><a href="../events/">Events</a><a href="../events/#pubs">Publications</a></div>
+      <div><p>Docs</p><a href="../docs/">Site checklist</a><a href="../docs/components.html">Component reference</a><a href="../docs/collectors.html">Collectors</a><a href="https://www.scitags.org/api.json">Registry API</a></div>
+      <div><p>Community</p><a href="https://github.com/scitags">GitHub</a><a href="https://groups-portal.web.cern.ch/group/net-wg/">Mailing list</a></div>
+    </nav>
+  </div>
+  <div class="wrap bottom">Hosted on GitHub Pages</div>
+</footer>
+</body>
+</html>

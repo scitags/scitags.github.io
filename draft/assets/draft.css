@@ -92,6 +92,7 @@ p { margin: 0; }
 .fact { flex: 1 1 200px; display: flex; flex-direction: column; gap: 4px; }
 .fact strong { font-family: var(--font-head); font-size: 36px; line-height: 1.1; }
 .fact span { font-size: 15px; color: var(--ink-3); }
+.fact-note { flex: 1 1 100%; font-size: 14px; color: var(--ink-3); }
 
 /* Sections */
 .section { padding-top: 48px; padding-bottom: 48px; display: flex; flex-direction: column; gap: 36px; }
@@ -179,7 +180,7 @@ code { font-family: var(--font-mono); font-size: 0.9em; }
 .pubs { display: flex; flex-direction: column; gap: 12px; }
 .pubs.row { flex-direction: row; flex-wrap: wrap; gap: 16px; }
 .pub { flex: 1 1 320px; text-decoration: none; color: var(--ink); border-radius: 12px; background: var(--tint); padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
-.pub:hover { color: var(--ink); background: var(--mist); }
+a.pub:hover { color: var(--ink); background: var(--mist); }
 .pub .venue { font-size: 13px; font-weight: 600; color: var(--signal-text); }
 .pub .title { font-weight: 600; line-height: 1.45; }
 

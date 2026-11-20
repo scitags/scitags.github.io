@@ -76,7 +76,7 @@ def shell(title, rel, current, body, script=""):
     </div>
     <nav aria-label="Footer">
       <div><p>Project</p><a href="{rel}#how">How it works</a><a href="{rel}events/">Events</a><a href="{rel}events/#pubs">Publications</a></div>
-      <div><p>Docs</p><a href="{rel}docs/">Get started</a><a href="{rel}docs/collectors.html">Collectors</a><a href="https://www.scitags.org/api.json">Registry API</a></div>
+      <div><p>Docs</p><a href="{rel}docs/">Site checklist</a><a href="{rel}docs/components.html">Component reference</a><a href="{rel}docs/collectors.html">Collectors</a><a href="https://www.scitags.org/api.json">Registry API</a></div>
       <div><p>Community</p><a href="https://github.com/scitags">GitHub</a><a href="https://groups-portal.web.cern.ch/group/net-wg/">Mailing list</a></div>
     </nav>
   </div>
@@ -90,8 +90,10 @@ def shell(title, rel, current, body, script=""):
 # ---------------------------------------------------------------- docs
 
 DOCS = [
-    # (source markdown, output file, page title, heading levels in the side menu)
-    ("howto.md", "index.html", "Get started", (3,)),
+    # (source markdown relative to the repo root, output file, page title,
+    #  heading levels in the side menu)
+    ("_draft/site-checklist.md", "index.html", "Site checklist", (2,)),
+    ("howto.md", "components.html", "Component reference", (3,)),
     ("collectors.md", "collectors.html", "Firefly collector guide", (2,)),
 ]
 
@@ -164,6 +166,9 @@ def build_docs():
 # ---------------------------------------------------------------- events
 
 PUBS = [
+    # (url or None, venue, title, note)
+    (None, "CHEP 2026 · proceedings forthcoming",
+     "Scitags at Scale: Terabit Packet Marking and WLCG Data Challenge Readiness", "Not yet published"),
     ("https://www.scitags.org/assets/img/CHEP_2025.pdf", "CHEP 2025 · EPJ Web of Conferences",
      "Scitags: A Standardized Framework for Traffic Identification and Network Visibility in Data-Intensive Research Infrastructures", "PDF"),
     ("https://www.scitags.org/assets/img/chep_paper23.pdf", "CHEP 2023 · EPJ Web of Conferences",
@@ -195,10 +200,11 @@ def build_events():
         if e["year"] not in years:
             years.append(e["year"])
     esc = html.escape
-    pubs = "".join(
-        f'<a class="pub" href="{esc(u)}"><span class="venue">{esc(v)}</span>'
-        f'<span class="title">{esc(t)}</span><span class="note">{esc(k)}</span></a>'
-        for u, v, t, k in PUBS)
+    def pub(u, v, t, k):
+        inner = (f'<span class="venue">{esc(v)}</span><span class="title">{esc(t)}</span>'
+                 f'<span class="note">{esc(k)}</span>')
+        return f'<a class="pub" href="{esc(u)}">{inner}</a>' if u else f'<div class="pub">{inner}</div>'
+    pubs = "".join(pub(*p) for p in PUBS)
     filters = '<button type="button" data-year="all" aria-pressed="true">All years</button>' + "".join(
         f'<button type="button" data-year="{y}" aria-pressed="false">{y}</button>' for y in years)
     blocks = []
