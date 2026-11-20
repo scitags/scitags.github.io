@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Firefly collector guide · SciTags (draft)</title>
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@500;700&display=swap">
+  <link rel="stylesheet" href="../assets/draft.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="draft-banner"><div class="wrap"><span>Draft redesign for review, not yet the official site.</span><a href="../../">Go to the current scitags.org</a></div></div>
+<header class="site-header light">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/img/scitags-logo.svg" alt="SciTags home"></a>
+    <nav aria-label="Main">
+      <a href="../">Home</a>
+      <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../events/">Events</a>
+      <a class="nav-button" href="https://github.com/scitags">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs">
+    <div>
+      <p class="group-title">Guides</p>
+      <ul><li><a href="./">Site checklist</a></li><li><a href="components.html">Component reference</a></li><li><a href="collectors.html" aria-current="page">Firefly collector guide</a><ul><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#overview">Overview</a></li><li><a href="#components">Components</a></li><li><a href="#global-collector-configuration">Global Collector Configuration</a></li><li><a href="#metadata-generation-scripts">Metadata Generation Scripts</a></li><li><a href="#output-options">Output Options</a></li><li><a href="#sample-deployment-configurations">Sample Deployment Configurations</a></li><li><a href="#logstash-deployment">Logstash Deployment</a></li><li><a href="#dashboard">Dashboard</a></li><li><a href="#field-reference">Field Reference</a></li><li><a href="#notes">Notes</a></li></ul></li></ul>
+    </div>
+    <div>
+      <p class="group-title">Reference</p>
+      <ul>
+        <li><a href="https://www.scitags.org/api.json">Registry (api.json)</a></li>
+        <li><a href="https://github.com/scitags/scitags.github.io/blob/main/schemas/v1.0.0/firefly.schema.json">Firefly schema v1.0.0</a></li>
+        <li><a href="https://github.com/scitags/scitags.github.io/blob/main/schemas/v1.0.0/registry.schema.json">Registry schema v1.0.0</a></li>
+        <li><a href="https://datatracker.ietf.org/doc/draft-cc-v6ops-wlcg-flow-label-marking/">IPv6 flow label draft</a></li>
+      </ul>
+    </div>
+  </nav>
+  <article class="docs-main">
+    <p class="crumbs">Docs / Firefly collector guide</p>
+    <div class="prose">
+<h1 id="firefly-collector-guide">Firefly Collector Guide</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#pipeline-flow">Pipeline Flow</a></li>
+<li><a href="#components">Components</a></li>
+<li><a href="#1-input-01-inputconf">1. Input (<code>01-input.conf</code>)</a></li>
+<li><a href="#2-parsing-02-parsingconf">2. Parsing (<code>02-parsing.conf</code>)</a></li>
+<li><a href="#3-duration-calculation-05-calc-durationconf">3. Duration Calculation (<code>05-calc-duration.conf</code>)</a></li>
+<li><a href="#4-throughput-calculation-06-calc-throughputconf">4. Throughput Calculation (<code>06-calc-throughput.conf</code>)</a></li>
+<li><a href="#5-post-processing-63-post-processingconf">5. Post-Processing (<code>63-post-processing.conf</code>)</a></li>
+<li><a href="#6-local-traffic-filtering-64-drop-localconf">6. Local Traffic Filtering (<code>64-drop-local.conf</code>)</a></li>
+<li><a href="#7-cric-site-enrichment-70-cric-sitesconf">7. CRIC Site Enrichment (<code>70-cric-sites.conf</code>)</a></li>
+<li><a href="#8-scitags-experimentactivity-enrichment-71-scitagsconf">8. SciTags Experiment/Activity Enrichment (<code>71-scitags.conf</code>)</a></li>
+<li><a href="#metadata-generation-scripts">Metadata Generation Scripts</a></li>
+<li><a href="#output-options">Output Options</a></li>
+<li><a href="#sample-deployment-configurations">Sample Deployment Configurations</a></li>
+<li><a href="#docker-deployment">Logstash Deployment</a></li>
+<li><a href="#dashboard">Dashboard</a></li>
+<li><a href="#field-reference">Field Reference</a></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>The Firefly Collector is a packet collection and analysis pipeline for any scientific data transfer system that supports fireflies (network telemetry). It ingests network flow metadata via UDP using the "firefly" protocol, enriches the data with site and experiment information, performs calculations, and stores the results for visualization and analysis.</p>
+<h3 id="pipeline-flow">Pipeline Flow</h3>
+<pre><code>UDP (port 10514) → Logstash → [Parsing → Calculations → Enrichment → Output]
+</code></pre>
+<h2 id="components">Components</h2>
+<h3 id="1-input-01-inputconf">1. Input (<code>01-input.conf</code>)</h3>
+<p>Receives firefly packets via UDP on port 10514.</p>
+<p><strong>Key settings:</strong>
+- <code>port =&gt; 10514</code> - Standard firefly UDP port
+- <code>host =&gt; "::"</code> - Listen on all IPv6 interfaces (dual-stack capable)
+- <code>queue_size =&gt; 50000</code> - Input queue depth for burst handling
+- <code>workers =&gt; 20</code> - Parallel packet processing workers</p>
+<p><strong>Configuration tip:</strong> Change <code>host =&gt; "0.0.0.0"</code> for IPv4-only deployments.</p>
+<h3 id="2-parsing-02-parsingconf">2. Parsing (<code>02-parsing.conf</code>)</h3>
+<p>Parses syslog-wrapped firefly packets and extracts the JSON payload.</p>
+<p><strong>What it does:</strong>
+- Grok pattern parses the syslog header (priority, version, timestamp, hostname, program, process_id, message_id, structured_data)
+- JSON filter extracts the firefly payload from <code>syslog_message</code>
+- SHA256 fingerprint generates a 5-tuple flow identifier (src_ip, dst_ip, src_port, dst_port, protocol)
+- Date filter maps the UNIX_MS timestamp to <code>@timestamp</code></p>
+<p><strong>Output fields after parsing:</strong>
+- <code>[flow-id]</code> - 5-tuple flow identifier
+- <code>[flow_fingerprint]</code> - SHA256 hash of the 5-tuple
+- <code>[timestamp]</code> - Unix timestamp in milliseconds
+- Various syslog fields</p>
+<h3 id="3-duration-calculation-05-calc-durationconf">3. Duration Calculation (<code>05-calc-duration.conf</code>)</h3>
+<p>Computes flow duration from start/end timestamps using a Ruby filter.</p>
+<p><strong>Ruby script:</strong> <code>conf/ruby/calc_duration.rb</code></p>
+<p><strong>Logic:</strong>
+- Parses <code>[flow-lifecycle][start-time]</code> and <code>[flow-lifecycle][end-time]</code>
+- Calculates: <code>duration = end_time - start_time</code>
+- Result stored in <code>[flow-lifecycle][duration]</code> (rounded to 3 decimal places)</p>
+<p><strong>Requirements:</strong> Both <code>start-time</code> and <code>end-time</code> must be present and valid ISO8601 format.</p>
+<h3 id="4-throughput-calculation-06-calc-throughputconf">4. Throughput Calculation (<code>06-calc-throughput.conf</code>)</h3>
+<p>Computes throughput and total bytes for flows with duration data.</p>
+<p><strong>Ruby script:</strong> <code>conf/ruby/calc_throughput.rb</code></p>
+<p><strong>Logic:</strong>
+- Uses <code>duration</code> from previous filter
+- Calculates <code>usage_bytes = max(received, sent)</code>
+- Calculates <code>total_bytes = received + sent</code>
+- Calculates <code>average_throughput = usage_bytes / duration</code>
+- Results stored in <code>[flow-lifecycle][throughput]</code> and <code>[flow-lifecycle][total_bytes]</code></p>
+<p><strong>Note:</strong> The <code>max()</code> function ensures the larger transfer direction is used for throughput, normalizing direction-agnostic measurements.</p>
+<h3 id="5-post-processing-63-post-processingconf">5. Post-Processing (<code>63-post-processing.conf</code>)</h3>
+<p>Normalizes and renames fields for consistent data model.</p>
+<p><strong>Field renames:</strong>
+- <code>[flow-id]</code> → <code>[meta]</code> namespace (src_port, protocol, src_ip, dst_port, dst_ip)
+- Syslog fields → <code>[meta][syslog]</code> namespace (timestamp, version, hostname, app_name)
+- Context fields → <code>[meta]</code> namespace (activity_id, application, experiment_id)
+- Firefly version → <code>[meta][firefly_version]</code>
+- Usage/storage values → <code>[values]</code> namespace</p>
+<p><strong>Direction normalization:</strong>
+- If <code>received &gt; sent</code> and application is NOT http-put/http-get, swaps src/dst fields
+- This ensures <code>sent</code> is always the larger value for most transfers</p>
+<p><strong>Pruning:</strong> Keeps only essential fields (meta, start, end, duration, throughput, total_bytes, message, @timestamp, values, storage)</p>
+<p><strong>Drop condition:</strong> Events without <code>[meta][state]</code> are dropped (incomplete flows)</p>
+<h3 id="6-local-traffic-filtering-64-drop-localconf">6. Local Traffic Filtering (<code>64-drop-local.conf</code>)</h3>
+<p>Drops traffic where source and destination are at the same site.</p>
+<p><strong>Logic:</strong>
+- Uses CRIC site names: <code>[meta][cric][src][name]</code> and <code>[meta][cric][dst][name]</code>
+- Comparison performed after site enrichment in <code>70-cric-sites.conf</code></p>
+<p><strong>Use case:</strong> Eliminates internal network traffic for sites that both ingest and export data.</p>
+<h3 id="7-cric-site-enrichment-70-cric-sitesconf">7. CRIC Site Enrichment (<code>70-cric-sites.conf</code>)</h3>
+<p>Enriches flows with WLCG CRIC (Central Resource Investigation Catalog) metadata.</p>
+<p><strong>Metadata source:</strong> MaxMind DB (<code>cric.mmdb</code>) generated by <code>metadata/cric/cric_metadata_collector.py</code></p>
+<p><strong>What it does:</strong>
+1. <strong>Source IP lookup</strong> - GeoIP lookup on <code>[meta][src_ip]</code> → <code>[meta][cric][src]</code>
+2. <strong>Destination IP lookup</strong> - GeoIP lookup on <code>[meta][dst_ip]</code> → <code>[meta][cric][dst]</code>
+3. <strong>JSON expansion</strong> - CRIC metadata stored as JSON string in <code>city_name</code> is extracted
+4. <strong>Hostname resolution</strong> - Resolves <code>[meta][syslog][hostname]</code> to IP via DNS, then looks up site info
+5. <strong>Site name extraction</strong> - Site name available in <code>[meta][cric][src][name]</code>, <code>[meta][cric][dst][name]</code>, and <code>[meta][syslog][geoip][name]</code></p>
+<p><strong>DNS caching:</strong>
+- <code>cache_size =&gt; 10000</code> - Caches up to 10,000 hostname-to-IP mappings
+- <code>cache_ttl =&gt; 86400</code> - 24-hour TTL for DNS cache entries</p>
+<p><strong>CRIC metadata includes:</strong>
+- <code>name</code> - Site name (e.g., "AGLT2")
+- <code>latitude</code>, <code>longitude</code> - Geographic coordinates
+- <code>country</code> - Country name
+- <code>net_site</code> - Network site identifier
+- <code>asn</code> - Autonomous System Number
+- <code>tier</code> - WLCG tier level (0, 1, 2, or 3)</p>
+<h3 id="8-scitags-experimentactivity-enrichment-71-scitagsconf">8. SciTags Experiment/Activity Enrichment (<code>71-scitags.conf</code>)</h3>
+<p>Translates experiment and activity IDs to human-readable names.</p>
+<p><strong>Metadata source:</strong> YAML maps generated by <code>metadata/scitags/scitags_registry_map.py</code></p>
+<p><strong>What it does:</strong>
+1. <strong>Experiment name lookup</strong> - Translates <code>experiment_id</code> → <code>experiment</code> using <code>experiments_map.yml</code>
+2. <strong>Activity name lookup</strong> - Creates composite key (<code>experimentId_activityId</code>) → <code>activity</code> using <code>activities_map.yml</code></p>
+<p><strong>Output:</strong>
+- <code>[meta][experiment]</code> - Human-readable experiment name (e.g., "ATLAS")
+- <code>[meta][activity]</code> - Human-readable activity name (e.g., "Real Data")</p>
+<h2 id="global-collector-configuration">Global Collector Configuration</h2>
+<p>The global collector configuration includes all available filters in the recommended processing order. This is used when you need full flow analysis with all enrichment data.</p>
+<pre><code class="language-ruby"># Input
+01-input.conf
+
+# Parsing
+02-parsing.conf
+
+# Calculations
+05-calc-duration.conf
+06-calc-throughput.conf
+
+# Post-processing (renames, direction normalization, pruning)
+63-post-processing.conf
+
+# Local traffic filtering (optional - skip if you want to keep all traffic)
+64-drop-local.conf
+
+# Site enrichment (requires cric.mmdb)
+70-cric-sites.conf
+
+# Experiment/activity enrichment (requires YAML maps)
+71-scitags.conf
+
+# Output (choose one: Opensearch, Kafka, or Forwarding)
+99-outputs.conf.example
+99-kafka.conf.example
+99-firefly-fwd.conf.example
+</code></pre>
+<p><strong>When to use:</strong> Choose this configuration when you need complete flow data with site locations, experiment names, duration, throughput, and all enrichment for analysis, dashboards, and long-term storage.</p>
+<h2 id="metadata-generation-scripts">Metadata Generation Scripts</h2>
+<h3 id="cric-metadata-collector-metadatacriccric_metadata_collectorpy">CRIC Metadata Collector (<code>metadata/cric/cric_metadata_collector.py</code>)</h3>
+<p>Generates the <code>cric.mmdb</code> database with WLCG CRIC site information.</p>
+<p><strong>Usage:</strong></p>
+<pre><code class="language-bash">cd metadata/cric
+python cric_metadata_collector.py --verbose --output_mmdb /path/to/conf/logstash_data/cric.mmdb
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--cric_url</code> - Custom CRIC API endpoint (default: WLCG-CRIC)
+- <code>--output_mmdb</code> - Output file path for MMDB
+- <code>--verbose</code> - Enable debug logging
+- <code>--periodic N</code> - Run periodically every N seconds</p>
+<p><strong>Required output path in Logstash:</strong> <code>/etc/stardust/pipeline/cric.mmdb</code></p>
+<h3 id="scitags-registry-map-metadatascitagsscitags_registry_mappy">SciTags Registry Map (<code>metadata/scitags/scitags_registry_map.py</code>)</h3>
+<p>Generates YAML maps for experiment and activity names from the SciTags API.</p>
+<p><strong>Usage:</strong></p>
+<pre><code class="language-bash">cd metadata/scitags
+python scitags_registry_map.py --verbose --output-yaml /path/to/conf/logstash_data
+</code></pre>
+<p><strong>Options:</strong>
+- <code>--scitags_url</code> - Custom SciTags API endpoint (default: http://scitags.docs.cern.ch/api.json)
+- <code>--output-yaml</code> - Output directory for YAML files
+- <code>--verbose</code> - Enable debug logging
+- <code>--periodic N</code> - Run periodically every N seconds</p>
+<p><strong>Output files:</strong>
+- <code>experiments_map.yml</code> - Key: experiment ID, Value: experiment name
+- <code>activities_map.yml</code> - Key: "experimentId_activityId", Value: activity name</p>
+<p><strong>Required paths in Logstash:</strong> <code>/etc/stardust/pipeline/experiments_map.yml</code> and <code>/etc/stardust/pipeline/activities_map.yml</code></p>
+<h2 id="output-options">Output Options</h2>
+<h3 id="opensearchelasticsearch-99-outputsconfexample">Opensearch/Elasticsearch (<code>99-outputs.conf.example</code>)</h3>
+<p>Sends data to Opensearch/Elasticsearch with ILM (Index Lifecycle Management).</p>
+<p><strong>Key settings:</strong>
+- ILM enabled with pattern <code>{now/d}-000001</code>
+- Index alias: <code>stardust_firefly</code>
+- Requires ILM policy and template prior to launch</p>
+<p><strong>Use case:</strong> When you need long-term storage, search capabilities, and visualization with Kibana/OpenSearch/Grafana Dashboards.</p>
+<h3 id="forwarding-99-firefly-fwdconfexample">Forwarding (<code>99-firefly-fwd.conf.example</code>)</h3>
+<p>Forwards raw firefly messages via UDP to another collector.</p>
+<p><strong>Use case:</strong> Site forwarders that collect local fireflies and send to R&amp;E collectors.</p>
+<h3 id="kafka-99-kafkaconfexample">Kafka (<code>99-kafka.conf.example</code>)</h3>
+<p>Sends firefly messages to a Kafka bus for integration with the Research &amp; Education (R&amp;E) collector facility.</p>
+<p><strong>Key settings:</strong>
+- <code>bootstrap_servers</code> - Kafka broker addresses (comma-separated)
+- <code>topic_id</code> - Kafka topic for firefly messages
+- <code>acks</code> - Acknowledgment requirement (0, 1, or all)
+- <code>batch_size</code> - Number of messages to batch (default: 16384)
+- <code>linger_ms</code> - Time to wait for batch accumulation (default: 5)</p>
+<p><strong>Use case:</strong> R&amp;E collector facilities connected to other collectors via Kafka bus, enabling decoupled message distribution to multiple consumers, scalable ingestion by downstream systems, and integration with Kafka-based data lakes and stream processing.</p>
+<h2 id="sample-deployment-configurations">Sample Deployment Configurations</h2>
+<h3 id="minimal-forwarder">Minimal Forwarder</h3>
+<p><strong>Pipeline:</strong> <code>01-input.conf</code> + <code>02-parsing.conf</code> + <code>99-firefly-fwd.conf</code></p>
+<p><strong>Description:</strong> Basic configuration that only parses incoming firefly packets and forwards them unchanged to another collector. Use this when you need a simple relay point with minimal processing overhead, such as a local site collector that forwards to a central collector.</p>
+<h3 id="re-collector">R&amp;E Collector</h3>
+<p><strong>Pipeline:</strong> <code>01-input.conf</code> + <code>02-parsing.conf</code> + <code>99-kafka.conf.example</code></p>
+<p><strong>Description:</strong> Parses fireflies and publishes them to a Kafka bus for integration within R&amp;E network. Use this when you're setting up R&amp;E collector to feed data to a global R&amp;E collector facility.</p>
+<h3 id="site-forwarder-local-collector-two-logstash-instances">Site Forwarder + Local Collector (Two Logstash Instances)</h3>
+<p><strong>Forwarder instance:</strong>
+- Input + parsing + forwarding to central collector and/or Kafka bus</p>
+<p><strong>Local collector instance:</strong>
+- Input + all filters + Opensearch output</p>
+<p><strong>Description:</strong> Full processing pipeline that calculates duration and throughput, enriches data with site locations (CRIC) and experiment names (SciTags), then stores in Opensearch for visualization. Use this at a local site that wants to maintain its own analysis and dashboard capabilities while at the same time forwarding to a central collector. Two separate Logstash instances running on the same site. The forwarder handles quick relay of fireflies to central systems, while the local collector performs full enrichment and storage for site-specific analysis. </p>
+<h2 id="logstash-deployment">Logstash Deployment</h2>
+<pre><code class="language-bash">docker run \
+  --network=host \
+  --name firefly-stream \
+  -d \
+  -v ./conf/logstash/:/usr/share/logstash/pipeline/ \
+  -v ./conf/ruby/:/usr/lib/firefly/ruby/ \
+  -v ./conf/logstash_data/:/etc/stardust/pipeline/ \
+  -e XPACK_MONITORING_ENABLED=false \
+  docker.elastic.co/logstash/logstash:7.17.19
+</code></pre>
+<h3 id="opensearch-deployment-docker-compose">Opensearch Deployment (Docker Compose)</h3>
+<p>This setup is recommended for the <em>Local/site Collector</em> configuration where you need a complete stack running on a single site.</p>
+<pre><code class="language-yaml">version: '3'
+services:
+  opensearch-node:
+    image: opensearchproject/opensearch:latest
+    environment:
+      - cluster.name=opensearch-cluster
+      - discovery.type=single-node
+      - &quot;OPENSEARCH_JAVA_OPTS=-Xms64g -Xmx64g&quot;
+      - &quot;DISABLE_INSTALL_DEMO_CONFIG=true&quot;
+      - &quot;DISABLE_SECURITY_PLUGIN=true&quot;
+    volumes:
+      - /opt/opensearch/vol:/usr/share/opensearch/data
+    ports:
+      - &quot;9200:9200&quot;
+      - &quot;9600:9600&quot;
+    network_mode: 'host'
+    privileged: true
+
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:latest
+    depends_on:
+      - opensearch-node
+    ports:
+      - &quot;5601:5601&quot;
+    environment:
+      - 'OPENSEARCH_HOSTS=[&quot;http://localhost:9200&quot;]'
+      - &quot;DISABLE_SECURITY_DASHBOARDS_PLUGIN=true&quot;
+    network_mode: 'host'
+</code></pre>
+<h2 id="dashboard">Dashboard</h2>
+<p>Sample OpenSearch dashboard: <code>dashboards/Scitags Network Flows - OpenSearch.json</code></p>
+<p>Supports:
+- Site-based filtering (WLCG CRIC sites)
+- Experiment filtering (ATLAS, CMS, etc.)
+- Activity filtering (Real Data, Simulations, etc.)
+- Geographic visualization
+- Performance metrics (throughput, duration)</p>
+<p><strong>Note:</strong> The dashboard file is for OpenSearch Dashboards. For Grafana, import the dashboard JSON and configure as a data source.</p>
+<h2 id="field-reference">Field Reference</h2>
+<h3 id="core-fields-after-parsing">Core Fields (after parsing)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[meta][id]</code></td>
+<td>Flow fingerprint (SHA256)</td>
+</tr>
+<tr>
+<td><code>[meta][state]</code></td>
+<td>Flow lifecycle state</td>
+</tr>
+<tr>
+<td><code>[meta][src_ip]</code></td>
+<td>Source IP address</td>
+</tr>
+<tr>
+<td><code>[meta][dst_ip]</code></td>
+<td>Destination IP address</td>
+</tr>
+<tr>
+<td><code>[meta][src_port]</code></td>
+<td>Source port</td>
+</tr>
+<tr>
+<td><code>[meta][dst_port]</code></td>
+<td>Destination port</td>
+</tr>
+<tr>
+<td><code>[meta][protocol]</code></td>
+<td>Protocol (TCP/UDP)</td>
+</tr>
+<tr>
+<td><code>[meta][ip_version]</code></td>
+<td>IP version (4 or 6)</td>
+</tr>
+<tr>
+<td><code>[meta][application]</code></td>
+<td>Application name</td>
+</tr>
+<tr>
+<td><code>[meta][experiment_id]</code></td>
+<td>SciTags experiment ID</td>
+</tr>
+<tr>
+<td><code>[meta][activity_id]</code></td>
+<td>SciTags activity ID</td>
+</tr>
+<tr>
+<td><code>[meta][firefly_version]</code></td>
+<td>Firefly protocol version</td>
+</tr>
+<tr>
+<td><code>[start]</code></td>
+<td>Flow start timestamp</td>
+</tr>
+<tr>
+<td><code>[end]</code></td>
+<td>Flow end timestamp</td>
+</tr>
+<tr>
+<td><code>[duration]</code></td>
+<td>Flow duration (seconds)</td>
+</tr>
+<tr>
+<td><code>[throughput]</code></td>
+<td>Average throughput (bytes/sec)</td>
+</tr>
+<tr>
+<td><code>[total_bytes]</code></td>
+<td>Total bytes transferred</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="enriched-fields">Enriched Fields</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[meta][cric][src][name]</code></td>
+<td>Source site name</td>
+</tr>
+<tr>
+<td><code>[meta][cric][src][country]</code></td>
+<td>Source country</td>
+</tr>
+<tr>
+<td><code>[meta][cric][src][latitude]</code></td>
+<td>Source site latitude</td>
+</tr>
+<tr>
+<td><code>[meta][cric][src][longitude]</code></td>
+<td>Source site longitude</td>
+</tr>
+<tr>
+<td><code>[meta][cric][dst][name]</code></td>
+<td>Destination site name</td>
+</tr>
+<tr>
+<td><code>[meta][cric][dst][country]</code></td>
+<td>Destination country</td>
+</tr>
+<tr>
+<td><code>[meta][cric][dst][latitude]</code></td>
+<td>Destination site latitude</td>
+</tr>
+<tr>
+<td><code>[meta][cric][dst][longitude]</code></td>
+<td>Destination site longitude</td>
+</tr>
+<tr>
+<td><code>[meta][experiment]</code></td>
+<td>Human-readable experiment name</td>
+</tr>
+<tr>
+<td><code>[meta][activity]</code></td>
+<td>Human-readable activity name</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>All Logstash configurations use conditional ordering (01, 02, 05, 06, 63, 70, 71, 99) to ensure proper processing order</li>
+<li>The pipeline requires both <code>cric.mmdb</code> and YAML maps for full enrichment functionality</li>
+<li>Site normalization ensures <code>sent</code> is the larger value (except for http-put/http-get)</li>
+<li>Local traffic filtering requires site enrichment to be effective</li>
+<li>For the Kafka output, install the Logstash Kafka plugin: <code>bin/logstash-plugin install logstash-output-kafka</code></li>
+</ul>
+    </div>
+    <div class="docs-foot">
+      <a href="https://github.com/scitags/scitags.github.io/blob/main/collectors.md">Edit this page on GitHub</a>
+      <span>Generated from collectors.md</span>
+    </div>
+  </article>
+</div>
+</main>
+<footer class="site-footer">
+  <div class="wrap top">
+    <div class="about">
+      <img src="../assets/img/scitags-logo-dark.svg" alt="SciTags">
+      <p>Scientific Network Tags: identifying science domains and their activities at the network level.</p>
+    </div>
+    <nav aria-label="Footer">
+      <div><p>Project</p><a href="../#how">How it works</a><a href="../events/">Events</a><a href="../events/#pubs">Publications</a></div>
+      <div><p>Docs</p><a href="../docs/">Site checklist</a><a href="../docs/components.html">Component reference</a><a href="../docs/collectors.html">Collectors</a><a href="https://www.scitags.org/api.json">Registry API</a></div>
+      <div><p>Community</p><a href="https://github.com/scitags">GitHub</a><a href="https://groups-portal.web.cern.ch/group/net-wg/">Mailing list</a></div>
+    </nav>
+  </div>
+  <div class="wrap bottom">Hosted on GitHub Pages</div>
+</footer>
+</body>
+</html>
