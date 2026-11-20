@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>SciTags: network flow and packet marking for global scientific computing (draft)</title>
+  <meta name="description" content="Scientific network tags (scitags) is an initiative promoting identification of the science domains and their high-level activities at the network level.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@500;700&display=swap">
+  <link rel="stylesheet" href="assets/draft.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="draft-banner"><div class="wrap"><span>Draft redesign for review, not yet the official site.</span><a href="../">Go to the current scitags.org</a></div></div>
+
+<header class="site-header dark">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="assets/img/scitags-logo-dark.svg" alt="SciTags home"></a>
+    <nav aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#start">Get started</a>
+      <a href="#software">Software</a>
+      <a href="docs/">Docs</a>
+      <a href="events/">Events</a>
+      <a class="nav-button" href="https://github.com/scitags">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-text">
+        <p class="eyebrow">Scientific Network Tags</p>
+        <h1>Network flow and packet marking for global scientific computing</h1>
+        <p class="lead">SciTags labels data transfers with the science domain and activity behind them. Research and Education networks see how their links are used; science collaborations learn which flows matter to their computing.</p>
+        <div class="buttons">
+          <a class="btn btn-primary" href="#start">Get started</a>
+          <a class="btn btn-outline-light" href="https://docs.google.com/document/d/1x9JsZ7iTj44Ta06IHdkwpv5Q2u4U2QGLWnUeN2Zf5ts/edit?usp=sharing">Technical specification</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 480 360" aria-hidden="true" focusable="false">
+          <rect x="60" y="22" width="300" height="26" rx="13" fill="#E3ECF5" fill-opacity="0.10"/>
+          <rect x="150" y="62" width="310" height="26" rx="13" fill="#E3ECF5" fill-opacity="0.16"/>
+          <rect x="20" y="102" width="250" height="26" rx="13" fill="#E3ECF5" fill-opacity="0.12"/>
+          <rect x="290" y="102" width="150" height="26" rx="13" fill="#E3ECF5" fill-opacity="0.08"/>
+          <path fill="#E3ECF5" fill-rule="evenodd" d="M40 180 L66 146 H330 V214 H66 Z M74 180 a10 10 0 1 0 20 0 a10 10 0 1 0 -20 0 Z"/>
+          <path fill="#FF9A3C" d="M352 146 H426 a34 34 0 0 1 0 68 H352 a12 12 0 0 1 -12 -12 V158 a12 12 0 0 1 12 -12 Z"/>
+          <rect x="100" y="232" width="330" height="26" rx="13" fill="#E3ECF5" fill-opacity="0.14"/>
+          <rect x="40" y="272" width="210" height="26" rx="13" fill="#E3ECF5" fill-opacity="0.10"/>
+          <rect x="270" y="272" width="190" height="26" rx="13" fill="#E3ECF5" fill-opacity="0.16"/>
+          <rect x="130" y="312" width="260" height="26" rx="13" fill="#E3ECF5" fill-opacity="0.08"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="facts" aria-label="SciTags in numbers">
+    <div class="wrap">
+      <div class="fact"><strong>14</strong><span>experiments in the registry</span></div>
+      <div class="fact"><strong>12</strong><span>participating networks and software projects</span></div>
+      <div class="fact"><strong>4</strong><span>storage and transfer tools with tagging built in</span></div>
+      <div class="fact"><strong>37</strong><span>talks and demos since 2021</span></div>
+    </div>
+  </section>
+
+  <section class="wrap section first">
+    <div class="section-head">
+      <h2>Know which science is on the wire</h2>
+      <p>An open system, built on open-source software, that marks network packets and flows with the science domain and activity that produced them.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <p class="kicker">For R&amp;E networks</p>
+        <h3>Understand your traffic</h3>
+        <p>Capture the tags and correlate them with your existing NetFlow data to see network patterns, estimate usage and track activities.</p>
+      </div>
+      <div class="card">
+        <p class="kicker">For science collaborations</p>
+        <h3>See what your computing needs</h3>
+        <p>Get feedback from the networks themselves on which flows and patterns are critical for your workflows.</p>
+      </div>
+      <div class="card">
+        <p class="kicker">Open collaboration</p>
+        <h3>Built with the tools you run</h3>
+        <p>Developed openly with the storage and transfer projects, and open to any science domain and any R&amp;E provider.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="wrap section">
+    <div class="section-head">
+      <p class="eyebrow">How it works</p>
+      <h2>From a transfer request to a dashboard</h2>
+    </div>
+    <ol class="steps">
+      <li><span class="num">01</span><h3>Registry</h3><p>Maps each experiment and activity to a number, published as JSON.</p></li>
+      <li><span class="num">02</span><h3>Request</h3><p>Rucio, FTS or a client like gfal-copy attaches the tag to the transfer.</p></li>
+      <li><span class="num">03</span><h3>Marking</h3><p>The storage node moving the data (XRootD, dCache, StoRM) sends fireflies or marks the packets.</p></li>
+      <li><span class="num">04</span><h3>Collection</h3><p>Collectors receive the fireflies, add site and experiment details and store them.</p></li>
+      <li><span class="num">05</span><h3>Insight</h3><p>Dashboards give a global view of scientific traffic by experiment and activity.</p></li>
+    </ol>
+    <div class="cards">
+      <div class="card dark">
+        <h3>Fireflies</h3>
+        <p>A small UDP packet a storage node sends to a collector, describing one flow: its endpoints, experiment and activity. Works on any network today, no router changes needed.</p>
+        <pre>udp → collector.scitags.org:10514</pre>
+      </div>
+      <div class="card wide">
+        <h3>Packet marking</h3>
+        <p>The experiment and activity are written into the IPv6 flow label of every packet, so the network can see them in flight.</p>
+        <a class="more" href="https://datatracker.ietf.org/doc/draft-cc-v6ops-wlcg-flow-label-marking/">Read the IETF draft →</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="start" class="band">
+    <section class="wrap section">
+      <div class="section-head">
+        <p class="eyebrow">Get started</p>
+        <h2>Pick your role</h2>
+      </div>
+      <div class="cards">
+        <div class="card white">
+          <h3>I run storage</h3>
+          <p>Turn on fireflies in dCache 11.2.3+ or XRootD 5.0+.</p>
+          <pre><span class="c"># dcache.conf</span>
+pool.enable.firefly=true
+pool.firefly.destination=collector.scitags.org:10514</pre>
+          <a class="more" href="docs/#4-storage-systems-data-transfer-agents">Storage setup guide →</a>
+        </div>
+        <div class="card white">
+          <h3>I move data</h3>
+          <p>Pass the tag with FTS 3.2.10+, gfal2 2.21.0+, xrdcp or an HTTP header.</p>
+          <pre><span class="c"># scitag = expID &lt;&lt; 6 | actID</span>
+gfal-copy --scitag 132 &lt;src&gt; &lt;dst&gt;</pre>
+          <a class="more" href="docs/#3-transfer-services">Transfer services guide →</a>
+        </div>
+        <div class="card white">
+          <h3>I run a network</h3>
+          <p>Run the firefly collector: it parses fireflies, adds site and experiment details, and writes to OpenSearch or Kafka, or forwards them on.</p>
+          <pre>input → parse → enrich → output</pre>
+          <a class="more" href="docs/collectors.html">Collector guide →</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="wrap section first">
+    <div class="split">
+      <div class="section-head">
+        <p class="eyebrow">Registry</p>
+        <h2>Who is tagged</h2>
+        <p>Each experiment and its activities have fixed numbers. The registry is public, so every tool and network decodes tags the same way.</p>
+        <div class="links">
+          <a class="more" href="https://www.scitags.org/api.json">Registry JSON →</a>
+          <a class="more" href="#involved">Add your experiment →</a>
+        </div>
+      </div>
+      <ul class="chips" aria-label="Experiments in the registry">
+        <li>ATLAS</li><li>CMS</li><li>ALICE</li><li>LHCb</li><li>Belle II</li><li>SKA</li><li>DUNE</li>
+        <li>LSST</li><li>ILC</li><li>Pierre Auger</li><li>JUNO</li><li>NOvA</li><li>XENON</li>
+        <li class="muted">default (perfSONAR, caches, data challenges)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="software" class="wrap section">
+    <div class="section-head">
+      <p class="eyebrow">Software</p>
+      <h2>Open source, on GitHub</h2>
+    </div>
+    <div class="repos">
+      <a class="repo" href="https://github.com/scitags/flowd-go"><strong><img src="assets/img/favicon.svg" alt="">flowd-go</strong><span>Flow service in Go: watches sockets, sends fireflies and can mark packets.</span></a>
+      <a class="repo" href="https://github.com/scitags/firefly-collector"><strong><img src="assets/img/favicon.svg" alt="">firefly-collector</strong><span>Software-based UDP firefly collector: parse, enrich and store.</span></a>
+      <a class="repo" href="https://github.com/scitags/firefly-explorer"><strong><img src="assets/img/favicon.svg" alt="">firefly-explorer</strong><span>Command-line tool for looking at fireflies.</span></a>
+      <a class="repo" href="https://github.com/scitags/flowd"><strong><img src="assets/img/favicon.svg" alt="">flowd</strong><span>The original flow and packet marking service, in Python.</span></a>
+      <a class="repo" href="https://github.com/scitags/go-diag"><strong><img src="assets/img/favicon.svg" alt="">go-diag</strong><span>C-binding-free Go API for the kernel's socket subsystem.</span></a>
+      <a class="repo" href="https://github.com/scitags/gbpf"><strong><img src="assets/img/favicon.svg" alt="">gbpf</strong><span>A userspace eBPF VM written in Go.</span></a>
+    </div>
+    <p class="note">Tagging is also built into XRootD 5.0+, dCache 11.2.3+, FTS 3.2.10+ and gfal2 2.21.0+; StoRM uses flowd-go.</p>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="small">Participants</h2>
+    <div class="group">
+      <p class="eyebrow">Networks</p>
+      <div class="tiles">
+        <a href="https://www.es.net">ESnet</a>
+        <a href="https://www.geant.net">GÉANT</a>
+        <a href="https://www.internet2.edu">Internet2</a>
+        <a href="https://www.rnp.br/en">RNP</a>
+        <a href="https://www.jisc.ac.uk/">Jisc</a>
+        <a href="https://www.nordu.net">NORDUnet</a>
+        <a href="https://www.startap.net/starlight/ABOUT/">StarLight</a>
+      </div>
+    </div>
+    <div class="group">
+      <p class="eyebrow">Software and infrastructure</p>
+      <div class="tiles">
+        <a href="https://xrootd.slac.stanford.edu/">XRootD</a>
+        <a href="https://www.dcache.org/">dCache</a>
+        <a href="https://fts.web.cern.ch/fts/">FTS</a>
+        <a href="https://rucio.cern.ch/">Rucio</a>
+        <a href="https://opensciencegrid.org/">OSG</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section last">
+    <div class="columns">
+      <div>
+        <h2 class="small">Events</h2>
+        <ul class="event-list">
+          <li><span class="when">Nov 2026</span><span class="what">Supercomputing 2026, Chicago</span></li>
+          <li><span class="when">Oct 2026</span><span class="what">Asia Tier Centre Forum (ATCF), Bangkok</span></li>
+          <li><span class="when">Oct 2026</span><span class="what">LHCOPN/LHCONE workshop, Naples</span></li>
+          <li><span class="when">Sep 2026</span><span class="what">GRP Workshop, Naples</span></li>
+          <li><span class="when">May 2026</span><span class="what"><a href="https://indico.cern.ch/event/1471803/">CHEP 2026, Bangkok</a></span></li>
+        </ul>
+        <a class="more" href="events/">All 37 events since 2021 →</a>
+      </div>
+      <div>
+        <h2 class="small">Publications</h2>
+        <div class="pubs">
+          <a class="pub" href="https://www.scitags.org/assets/img/CHEP_2025.pdf"><span class="venue">CHEP 2025 · EPJ Web of Conferences · PDF</span><span class="title">Scitags: A Standardized Framework for Traffic Identification and Network Visibility in Data-Intensive Research Infrastructures</span></a>
+          <a class="pub" href="https://www.scitags.org/assets/img/chep_paper23.pdf"><span class="venue">CHEP 2023 · EPJ Web of Conferences · PDF</span><span class="title">Identifying and Understanding Scientific Network Flows</span></a>
+          <a class="pub" href="https://datatracker.ietf.org/doc/draft-cc-v6ops-wlcg-flow-label-marking/"><span class="venue">IETF Internet-Draft</span><span class="title">Use of the IPv6 Flow Label for WLCG Packet Marking</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="involved" class="cta">
+    <div class="wrap">
+      <div class="text">
+        <h2>Join the collaboration</h2>
+        <p>SciTags is open to any science domain that needs, or expects to need, high-throughput computing, and to any interested R&amp;E provider.</p>
+      </div>
+      <div class="buttons">
+        <a class="btn btn-primary" href="https://groups-portal.web.cern.ch/group/net-wg/">Join the mailing list</a>
+        <a class="btn btn-outline-light" href="https://github.com/scitags">GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap top">
+    <div class="about">
+      <img src="assets/img/scitags-logo-dark.svg" alt="SciTags">
+      <p>Scientific Network Tags: identifying science domains and their activities at the network level.</p>
+    </div>
+    <nav aria-label="Footer">
+      <div><p>Project</p><a href="#how">How it works</a><a href="events/">Events</a><a href="events/#pubs">Publications</a></div>
+      <div><p>Docs</p><a href="docs/">Get started</a><a href="docs/collectors.html">Collectors</a><a href="https://www.scitags.org/api.json">Registry API</a></div>
+      <div><p>Community</p><a href="https://github.com/scitags">GitHub</a><a href="https://groups-portal.web.cern.ch/group/net-wg/">Mailing list</a></div>
+    </nav>
+  </div>
+  <div class="wrap bottom">Hosted on GitHub Pages</div>
+</footer>
+</body>
+</html>
