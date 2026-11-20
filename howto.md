@@ -27,11 +27,11 @@ The source of truth that maps scientific domains/experiments (e.g., ATLAS, CMS) 
 ```
 
 ### 2. Data Management Systems (Orchestrators)
-TBA 
+Rucio (from 32.4.0), DIRAC (from 9.0.8) and ALICE O2 pass the SciTag to the transfer service in production, so sites do not need to configure anything here.
 
 ### 3. Transfer Services
 Brokers that receive the job and propagate metadata via headers or protocol parameters.
-**File Transfer Service (FTS)** support scitags from version 3.2.10 or higher, [gfal2](https://manpages.debian.org/unstable/gfal2-util-scripts/gfal-copy.1.en.html#scitag) library from version 2.21.0 
+**File Transfer Service (FTS)** supports scitags from FTS 3.12.11 and FTS-REST 3.12.4, the [gfal2](https://manpages.debian.org/unstable/gfal2-util-scripts/gfal-copy.1.en.html#scitag) library from version 2.21.0 
 
 ```
 In all the following examples scitag is an integer calculated using the following bit operations: 
@@ -87,7 +87,11 @@ curl -v --insecure -H "SciTag: 313" --capath <ca_path> -s -L -f -u user:password
 ### 4. Storage Systems (Data Transfer Agents)
 Software executing I/O that performs the physical packet marking or emits "Firefly" packets.
 
-Sample **XRootD/EOS Configuration** (/etc/xrootd/xrootd.cfg; from xrootd 5.0+, [reference docs](https://xrootd.web.cern.ch/doc/dev57/xrd_config.htm#_Toc171719982)):
+Before you start, check that your site's IP prefixes are registered in WLCG CRIC (see the verification steps below): fireflies are attributed to sites by prefix.
+
+Network: open outbound UDP 10514 to collector.scitags.org over IPv4 and IPv6; nothing inbound is needed. collector.scitags.org resolves to the nearest regional collector (us.scitags.org at ESnet, uk.scitags.org at Jisc, eu.scitags.org at GÉANT). Do not use global.scitags.org, which rejected fireflies in September 2026.
+
+Sample **XRootD/EOS Configuration** (/etc/xrootd/xrootd.cfg; from xrootd 5.0+ or EOS 5.2.19+, [reference docs](https://xrootd.web.cern.ch/doc/dev57/xrd_config.htm#_Toc171719982)). Configure the data servers, not the redirectors:
 ```bash
 
 # Direct fireflies to a global collector
@@ -106,15 +110,16 @@ xrootd.pmark defsfile curl https://scitags.docs.cern.ch/api.json
 xrootd.pmark map2exp path /<path> <VO>
 # xrootd.pmark map2exp path /cephfs/experiments/ska ska
 
-# (Optional)
+# (Optional, single-VO sites only)
 # if none of the above matches then a default VO and activity can be defined
+# multi-VO sites must not set map2exp default; map paths to VOs instead
 xrootd.pmark map2exp default <vo>
-# rootd.pmark map2exp default ska
+# xrootd.pmark map2exp default ska
 xrootd.pmark map2act <vo> default default
 # xrootd.pmark map2act ska default default
 ```
 
-Sample **dCache Configuration** (dcache.conf; from dcache 11.2.3+):
+Sample **dCache Configuration** (dcache.conf; from dcache 11.2.4+, latest 11.2 release recommended; 11.2.3 does not send start fireflies for HTTP third-party copies):
 ```bash
 pool.enable.firefly=true
 pool.firefly.destination=collector.scitags.org:10514
@@ -126,9 +131,11 @@ pool.firefly.excludes=a.b.c.d/16, aa:bb:cc:dd:ee:ff/64, v.x.w.z
 # directory mapping is not available in dCache
 ```
 
+Restart the pools after changing these settings. Do not leave out `pool.firefly.destination`: without it dCache sends fireflies only to the other end of the transfer. Pools must reach the WAN directly; pools whose WAN traffic is proxied through the doors produce no useful fireflies.
+
 Sample **StoRM configuration**
 
-StoRM relies on flowd-go service to send the fireflies.
+StoRM (from 1.4.3) relies on flowd-go service to send the fireflies. Known issues with StoRM fireflies are under investigation; an update is expected in December 2026.
 
 Sample configuration of flowd-go to be used with StoRM:
 ```
@@ -147,10 +154,15 @@ backends:
 **Verification steps:**
 ```
     a) tcpdump -nn -i any udp port 10514 on a pool/data server
-       shows packets to the collector;
+       shows packets to the collector, with no ICMP "unreachable" replies;
+       to generate one, send a test transfer with scitag 154
+       (ATLAS = 2, activity Data Challenge = 26), for example
+       curl -H "SciTag: 154" https://<door>/<path> -o /dev/null
     b) your site appears on the Scitags dashboard within 48 h
-    c) please check your IP prefixes are listed in WLCG CRIC (under netsites/netroutes)
-    If (a) passes but (b) does not, please contact support.
+    c) your IP prefixes are registered in WLCG CRIC (a NetSite with
+       NetworkRoutes for all IPv4 and IPv6 prefixes, Collaborations = WLCG);
+       without them fireflies cannot be attributed to your site
+    If (a) passes but (b) does not, check (c) first, then contact support.
 ```
 
 ### 5. Flow Services (flowd-go)
