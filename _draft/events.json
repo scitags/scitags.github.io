@@ -1,0 +1,275 @@
+[
+ {
+  "year": "2026",
+  "month": "Nov",
+  "title": "Supercomputing 2026, Chicago: NRE demo, 1.52 Tbps packet marking from UVic to the show floor"
+ },
+ {
+  "year": "2026",
+  "month": "Nov",
+  "title": "WLCG/HSF Workshop 2026, Bologna: Network Readiness for DC27"
+ },
+ {
+  "year": "2026",
+  "month": "Oct",
+  "title": "HEPiX Fall 2026 Workshop, Lincoln, Nebraska: WLCG Network Visibility",
+  "url": "https://indico.cern.ch/event/1679145/"
+ },
+ {
+  "year": "2026",
+  "month": "Oct",
+  "title": "Asia Tier Centre Forum (ATCF), Bangkok"
+ },
+ {
+  "year": "2026",
+  "month": "Oct",
+  "title": "LHCOPN/LHCONE workshop, Naples"
+ },
+ {
+  "year": "2026",
+  "month": "Sep",
+  "title": "GRP Workshop, Naples"
+ },
+ {
+  "year": "2026",
+  "month": "May",
+  "title": "20th International dCache Workshop: SciTags / Firefly status and results"
+ },
+ {
+  "year": "2026",
+  "month": "May",
+  "title": "CHEP 2026, Bangkok",
+  "url": "https://indico.cern.ch/event/1471803/"
+ },
+ {
+  "year": "2026",
+  "month": "Apr",
+  "title": "LHCOPN/LHCONE workshop, Montreal",
+  "url": "https://indico.cern.ch/event/1602404/"
+ },
+ {
+  "year": "2026",
+  "month": "Jan",
+  "title": "HEPiX IPv6 Working Group: Updates from perfSONAR, SciTags and the RNTWG",
+  "url": "https://indico.cern.ch/event/1608816/"
+ },
+ {
+  "year": "2025",
+  "month": "Nov",
+  "title": "Supercomputing 2025, St. Louis",
+  "url": "https://sc25.supercomputing.org/wp-content/uploads/2025/11/nre115s3.pdf"
+ },
+ {
+  "year": "2025",
+  "month": "Nov",
+  "title": "Rucio Community Workshop, SKA, Jodrell Bank",
+  "url": "https://indico.cern.ch/event/1545309/contributions/6749371/"
+ },
+ {
+  "year": "2025",
+  "month": "Oct",
+  "title": "XRootD and FTS Workshop @ PIC",
+  "url": "https://indico.cern.ch/event/1542060/contributions/6710220/"
+ },
+ {
+  "year": "2025",
+  "month": "Oct",
+  "title": "LHCOPN/LHCONE Workshop #55"
+ },
+ {
+  "year": "2025",
+  "month": "May",
+  "title": "GNA-G EU and US Community Calls",
+  "url": "https://www.gna-g.net/attend-a-meeting/gna-g-community-vcs-q2-2025/"
+ },
+ {
+  "year": "2025",
+  "month": "Apr",
+  "title": "22nd GEANT SIG-NOC meeting, Prague",
+  "url": "https://wiki.geant.org/display/SIGNOC/22nd+SIG-NOC+meeting+-+Prague%2C+Czechia"
+ },
+ {
+  "year": "2025",
+  "month": "Mar",
+  "title": "HEPiX Spring Workshop, Lugano",
+  "url": "https://indico.cern.ch/event/1477299/contributions/6412763/"
+ },
+ {
+  "year": "2025",
+  "month": "Mar",
+  "title": "LHCOPN/LHCONE Workshop, Jodrell Bank",
+  "url": "https://indico.cern.ch/event/1479019/#19-network-research-technologi"
+ },
+ {
+  "year": "2025",
+  "month": "Feb",
+  "title": "FOSDEM 2025, Brussels",
+  "url": "https://fosdem.org/2025/schedule/event/fosdem-2025-6182-scitags-network-traffic-tagging-for-scientific-computing/"
+ },
+ {
+  "year": "2024",
+  "month": "Dec",
+  "title": "Research network engineering (RNE) community group",
+  "url": "https://www.jisc.ac.uk/get-involved/research-network-engineering-rne-community-group"
+ },
+ {
+  "year": "2024",
+  "month": "Nov",
+  "title": "Supercomputing 2024, Atlanta",
+  "url": "https://sc24.supercomputing.org/wp-content/uploads/2025/02/nre008.pdf"
+ },
+ {
+  "year": "2024",
+  "month": "Nov",
+  "title": "HEPiX Fall Workshop, Oklahoma",
+  "url": "https://indico.cern.ch/event/1450798/contributions/6199201/"
+ },
+ {
+  "year": "2024",
+  "month": "Oct",
+  "title": "LHCOPN/LHCONE Workshop, Beijing",
+  "url": "https://indico.cern.ch/event/1410638/#27-scitags-a-standardized-fram"
+ },
+ {
+  "year": "2024",
+  "month": "Apr",
+  "title": "HEPiX Spring Workshop, Paris",
+  "url": "https://indico.cern.ch/event/1377701/contributions/5900862/"
+ },
+ {
+  "year": "2024",
+  "month": "Apr",
+  "title": "LHCOPN/LHCONE Workshop, Catania",
+  "url": "https://indico.cern.ch/event/1349135/"
+ },
+ {
+  "year": "2023",
+  "month": "Nov",
+  "title": "Supercomputing 2023 demo, Denver",
+  "url": "https://sc23.supercomputing.org/"
+ },
+ {
+  "year": "2023",
+  "month": "Oct",
+  "title": "4th Global Research Platform Workshop, Cyprus",
+  "url": "https://grpworkshop2023.theglobalresearchplatform.net/4GRP_Program-FINAL-100623.pdf"
+ },
+ {
+  "year": "2023",
+  "month": "May",
+  "title": "CHEP 2023, Norfolk",
+  "url": "https://indico.jlab.org/event/459/contributions/11321/"
+ },
+ {
+  "year": "2023",
+  "month": "Apr",
+  "title": "LHCOPN/LHCONE Workshop, Prague",
+  "url": "https://indico.cern.ch/event/1234127/"
+ },
+ {
+  "year": "2023",
+  "month": "Apr",
+  "title": "HEPiX Workshop, Taiwan",
+  "url": "https://indico.cern.ch/event/1222948/contributions/5321009/"
+ },
+ {
+  "year": "2023",
+  "month": "Mar",
+  "title": "XRootD & FTS Workshop, Ljubljana",
+  "url": "https://indico.cern.ch/event/875381/contributions/5300142/"
+ },
+ {
+  "year": "2022",
+  "month": "Nov",
+  "title": "Supercomputing 2022 demo, Dallas",
+  "url": "https://sc22.supercomputing.org/",
+  "extras": [
+   {
+    "label": "Blog",
+    "url": "https://blog.sflow.com/2022/11/scientific-network-tags-scitags.html"
+   },
+   {
+    "label": "Poster",
+    "url": "https://www.scitags.org/assets/img/SCITAGS_SC22.pdf"
+   }
+  ]
+ },
+ {
+  "year": "2022",
+  "month": "Oct",
+  "title": "LHCOPN/LHCONE workshop, CERN",
+  "url": "https://indico.cern.ch/event/1146558/"
+ },
+ {
+  "year": "2022",
+  "month": "Oct",
+  "title": "WLCG Data Challenges Meeting, CERN",
+  "url": "https://indico.cern.ch/event/1212782/"
+ },
+ {
+  "year": "2022",
+  "month": "Oct",
+  "title": "HEPiX workshop, CERN",
+  "url": "https://indico.cern.ch/event/1200682/contributions/5103523/"
+ },
+ {
+  "year": "2022",
+  "month": "Oct",
+  "title": "3rd Global Research Platform Workshop, Salt Lake City",
+  "url": "http://grpworkshop2022.theglobalresearchplatform.net/program.html"
+ },
+ {
+  "year": "2022",
+  "month": "May",
+  "title": "HEPiX workshop",
+  "url": "https://indico.cern.ch/event/1123214/contributions/4833642/"
+ },
+ {
+  "year": "2022",
+  "month": "Mar",
+  "title": "LHCOPN/LHCONE workshop",
+  "url": "https://indico.cern.ch/event/1110783/"
+ },
+ {
+  "year": "2021",
+  "month": "Nov",
+  "title": "GridPP Technical Seminar",
+  "url": "https://indico.cern.ch/event/1093856/",
+  "extras": [
+   {
+    "label": "Slides",
+    "url": "https://indico.cern.ch/event/1093856/contributions/4600338/attachments/2349549/4007314/Scientific%20Network%20Tags_%20Packet%20and%20Flow%20Marking%20.pdf"
+   }
+  ]
+ },
+ {
+  "year": "2021",
+  "month": "Nov",
+  "title": "ATLAS ADC Technical Coordination Board",
+  "url": "https://indico.cern.ch/event/1096850/"
+ },
+ {
+  "year": "2021",
+  "month": "Oct",
+  "title": "LHCOPN/LHCONE workshop",
+  "url": "https://indico.cern.ch/event/1022426",
+  "extras": [
+   {
+    "label": "Slides",
+    "url": "https://indico.cern.ch/event/1022426/contributions/4492285/attachments/2326491/3963219/Research%20Network%20Technical%20WG%20update.pdf"
+   }
+  ]
+ },
+ {
+  "year": "2021",
+  "month": "Sep",
+  "title": "2nd Global Research Platform Workshop",
+  "url": "https://grpworkshop2021.theglobalresearchplatform.net/",
+  "extras": [
+   {
+    "label": "Slides",
+    "url": "https://grpworkshop2021.theglobalresearchplatform.net/PDF/4-McKEE-GRP-2021-Packet-FlowMarkingforGlobalScience%20Domains.pdf"
+   }
+  ]
+ }
+]

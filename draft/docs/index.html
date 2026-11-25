@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Site checklist · SciTags (draft)</title>
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@500;700&display=swap">
+  <link rel="stylesheet" href="../assets/draft.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="draft-banner"><div class="wrap"><span>Draft redesign for review, not yet the official site.</span><a href="../../">Go to the current scitags.org</a></div></div>
+<header class="site-header light">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/img/scitags-logo.svg" alt="SciTags home"></a>
+    <nav aria-label="Main">
+      <a href="../">Home</a>
+      <a href="../docs/" aria-current="page">Docs</a>
+      <a href="../events/">Events</a>
+      <a class="nav-button" href="https://github.com/scitags">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="wrap docs">
+  <nav class="docs-nav" aria-label="Docs">
+    <div>
+      <p class="group-title">Guides</p>
+      <ul><li><a href="./" aria-current="page">Site checklist</a><ul><li><a href="#before-you-start-your-network-in-cric">Before you start: your network in CRIC</a></li><li><a href="#1-run-a-scitags-capable-version">1. Run a SciTags-capable version</a></li><li><a href="#2-turn-on-fireflies-on-every-data-serving-node">2. Turn on fireflies on every data-serving node</a></li><li><a href="#3-open-the-network">3. Open the network</a></li><li><a href="#4-check-that-it-works">4. Check that it works</a></li><li><a href="#known-issues">Known issues</a></li></ul></li><li><a href="components.html">Component reference</a></li><li><a href="collectors.html">Firefly collector guide</a></li></ul>
+    </div>
+    <div>
+      <p class="group-title">Reference</p>
+      <ul>
+        <li><a href="https://www.scitags.org/api.json">Registry (api.json)</a></li>
+        <li><a href="https://github.com/scitags/scitags.github.io/blob/main/schemas/v1.0.0/firefly.schema.json">Firefly schema v1.0.0</a></li>
+        <li><a href="https://github.com/scitags/scitags.github.io/blob/main/schemas/v1.0.0/registry.schema.json">Registry schema v1.0.0</a></li>
+        <li><a href="https://datatracker.ietf.org/doc/draft-cc-v6ops-wlcg-flow-label-marking/">IPv6 flow label draft</a></li>
+      </ul>
+    </div>
+  </nav>
+  <article class="docs-main">
+    <p class="crumbs">Docs / Site checklist</p>
+    <div class="prose">
+<h1 id="site-checklist">Site checklist</h1>
+<p>How to turn on SciTags at a WLCG storage site. It takes four steps and a CRIC check. ATLAS is asking every storage site to enable fireflies before the next WLCG Data Challenge (DC27, early 2027).</p>
+<h2 id="before-you-start-your-network-in-cric">Before you start: your network in CRIC</h2>
+<p>SciTags works out which site a flow belongs to from its IP addresses, using the network prefixes registered in WLCG CRIC. Today about half of all fireflies cannot be attributed to a site because a prefix is missing, so check this first.</p>
+<ul>
+<li>Register every prefix that hosts WLCG services: storage, FTS endpoints, compute and perfSONAR, including prefixes that are not on LHCONE.</li>
+<li>Your site needs a NetSite with NetworkRoutes that hold its IPv4 and IPv6 prefixes. The Collaborations field must read exactly <code>WLCG</code>.</li>
+<li>Editing needs the <code>SITE_&lt;SITE&gt;_Admin</code> group, requested at <a href="https://wlcg-cric.cern.ch/core/usergrouprequest/create/">https://wlcg-cric.cern.ch/core/usergrouprequest/create/</a>. Without a CERN account, write to lhcone-operations@cern.ch.</li>
+<li>See what is registered now: <a href="https://wlcg-cric.cern.ch/api/core/rcsite/query/?json">https://wlcg-cric.cern.ch/api/core/rcsite/query/?json</a></li>
+</ul>
+<h2 id="1-run-a-scitags-capable-version">1. Run a SciTags-capable version</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Software</th>
+<th style="text-align: left;">Minimum</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">dCache</td>
+<td style="text-align: left;">11.2.4</td>
+<td style="text-align: left;">Recommended: the next 11.2 production release with the November 2026 firefly fixes (expected 11.2.12). 11.2.3 sends no start markers for HTTP third-party copies; 10.2 cannot send to a collector.</td>
+</tr>
+<tr>
+<td style="text-align: left;">XRootD</td>
+<td style="text-align: left;">5.0</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">EOS</td>
+<td style="text-align: left;">5.2.19</td>
+<td style="text-align: left;">Takes its packet-marking settings from XRootD.</td>
+</tr>
+<tr>
+<td style="text-align: left;">StoRM</td>
+<td style="text-align: left;">1.4.3</td>
+<td style="text-align: left;">Fireflies are sent by flowd-go. Known issues are being investigated; an update is expected in December 2026.</td>
+</tr>
+<tr>
+<td style="text-align: left;">FTS</td>
+<td style="text-align: left;">3.12.11 (FTS-REST 3.12.4)</td>
+<td style="text-align: left;">Passes the tag on to storage.</td>
+</tr>
+<tr>
+<td style="text-align: left;">gfal2</td>
+<td style="text-align: left;">2.21.0</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Rucio</td>
+<td style="text-align: left;">32.4.0</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">DIRAC</td>
+<td style="text-align: left;">9.0.8</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table></div>
+<p>Rucio, FTS, DIRAC and ALICE O2 already pass the tag to storage in production, so a site only has to configure its storage.</p>
+<h2 id="2-turn-on-fireflies-on-every-data-serving-node">2. Turn on fireflies on every data-serving node</h2>
+<p>Send fireflies to <code>collector.scitags.org:10514</code>, unless your network provider asks you to use its own collector. Do not use <code>global.scitags.org</code>: it rejected fireflies in September 2026.</p>
+<h3 id="dcache">dCache</h3>
+<pre><code>pool.enable.firefly=true
+pool.firefly.destination=collector.scitags.org:10514
+
+# Optional: skip fireflies when both endpoints are local
+pool.firefly.excludes=a.b.c.d/16, aa:bb:cc:dd:ee:ff/64
+</code></pre>
+<ul>
+<li>Set <code>pool.firefly.destination</code>. Without it, dCache sends fireflies only to the other end of the transfer. Several sites missed this when they upgraded. Restart the pools afterwards.</li>
+<li>Pools must talk to the WAN directly. Pools whose WAN traffic goes through the doors produce no useful fireflies.</li>
+<li>Leave <code>pool.firefly.vo-mapping</code> at its default unless asked to change it.</li>
+</ul>
+<h3 id="xrootd-and-eos">XRootD and EOS</h3>
+<pre><code>xrootd.pmark ffdest collector.scitags.org:10514
+xrootd.pmark domain remote
+
+# Optional: fallback for transfers that carry no SciTag
+xrootd.pmark defsfile curl https://scitags.docs.cern.ch/api.json
+</code></pre>
+<ul>
+<li>Configure the data servers, not the redirectors.</li>
+<li>Single-VO sites may add <code>xrootd.pmark map2exp default &lt;vo&gt;</code>.</li>
+<li>Multi-VO sites must not set <code>map2exp default</code>. Map paths to experiments instead, with <code>xrootd.pmark map2exp path /&lt;path&gt; &lt;vo&gt;</code> and <code>xrootd.pmark map2act &lt;vo&gt; default default</code>.</li>
+</ul>
+<h3 id="storm">StoRM</h3>
+<p>StoRM hands flow events to flowd-go, which sends the fireflies:</p>
+<pre><code>plugins:
+   namedPipe:
+       pipePath: &quot;/var/run/flowd&quot;
+
+backends:
+   firefly: {
+       stun: {},
+       sendToCollector: true,
+       collectorAddress: collector.scitags.org
+   }
+</code></pre>
+<h2 id="3-open-the-network">3. Open the network</h2>
+<ul>
+<li><strong>Outbound:</strong> UDP 10514 to <code>collector.scitags.org</code>, over IPv4 and IPv6.</li>
+<li><strong>Inbound:</strong> nothing.</li>
+</ul>
+<p><code>collector.scitags.org</code> points each site at the nearest regional collector: <code>us.scitags.org</code> (ESnet), <code>uk.scitags.org</code> (Jisc) or <code>eu.scitags.org</code> (GÉANT). The regional collectors forward to ESnet. An Asia/Pacific collector is planned.</p>
+<h2 id="4-check-that-it-works">4. Check that it works</h2>
+<ol>
+<li>On a data server, <code>tcpdump -nn -i any udp port 10514</code> shows packets going to the collector, with no ICMP "unreachable" replies.</li>
+<li>
+<p>Send a test transfer with tag 154 (ATLAS = 2, activity Data Challenge = 26; 2 &lt;&lt; 6 | 26 = 154):</p>
+<pre><code>curl -H "SciTag: 154" https://&lt;door&gt;/&lt;path&gt; -o /dev/null
+xrdcp "root://&lt;host&gt;//&lt;path&gt;?scitag.flow=154" /dev/null
+</code></pre>
+</li>
+<li>
+<p>Within 48 hours your site appears on the <a href="https://dashboard.stardust.es.net/d/b6d7dc1e-dc56-4f39-abe0-a9e7199021f8/scitags-network-flows-v3">SciTags dashboard</a>. Set Source Site or Dest Site to your WLCG site name.</p>
+</li>
+<li>If it does not appear, check your CRIC prefixes first: that is the usual cause.</li>
+</ol>
+<p>To see what dCache sends, set the <code>org.dcache.scitags</code> logger to DEBUG in <code>logback.xml</code>, both as a <code>&lt;logger&gt;</code> entry and as a threshold in the CellThresholdFilter, then look for <code>scitags event=marker</code> and <code>event=marker-skip</code> lines.</p>
+<h2 id="known-issues">Known issues</h2>
+<ul>
+<li><strong><code>global.scitags.org</code></strong> rejected fireflies in September 2026. Use <code>collector.scitags.org</code>.</li>
+<li><strong>XRootD 5.7</strong> reports flow end times about 10 seconds late. XRootD 5.9 does not.</li>
+<li><strong>StoRM</strong> firefly issues are under investigation; an update is expected in December 2026.</li>
+<li><strong>The dashboard</strong> cannot yet show which hosts at a site are sending. A per-host view has been requested, so for now the dashboard alone does not prove that every node is configured.</li>
+</ul>
+    </div>
+    <div class="docs-foot">
+      <a href="https://github.com/scitags/scitags.github.io/blob/main/_draft/site-checklist.md">Edit this page on GitHub</a>
+      <span>Generated from _draft/site-checklist.md</span>
+    </div>
+  </article>
+</div>
+</main>
+<footer class="site-footer">
+  <div class="wrap top">
+    <div class="about">
+      <img src="../assets/img/scitags-logo-dark.svg" alt="SciTags">
+      <p>Scientific Network Tags: identifying science domains and their activities at the network level.</p>
+    </div>
+    <nav aria-label="Footer">
+      <div><p>Project</p><a href="../#how">How it works</a><a href="../events/">Events</a><a href="../events/#pubs">Publications</a></div>
+      <div><p>Docs</p><a href="../docs/">Site checklist</a><a href="../docs/components.html">Component reference</a><a href="../docs/collectors.html">Collectors</a><a href="https://www.scitags.org/api.json">Registry API</a></div>
+      <div><p>Community</p><a href="https://github.com/scitags">GitHub</a><a href="https://groups-portal.web.cern.ch/group/net-wg/">Mailing list</a></div>
+    </nav>
+  </div>
+  <div class="wrap bottom">Hosted on GitHub Pages</div>
+</footer>
+</body>
+</html>
